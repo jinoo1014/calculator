@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>소득세계산기</title>
+    <title>소득세 계산기</title>
     <style>
         * {
             margin: 0;
@@ -166,10 +166,12 @@
         .result-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 12px;
             padding-bottom: 12px;
             border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .result-item:last-child {
@@ -302,28 +304,31 @@
             margin-top: 25px;
         }
 
+        .contact-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .contact-line {
+            margin: 8px 0;
+        }
+
         .contact-section a {
             display: inline-block;
             background: white;
             color: #667eea;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
-            margin-top: 12px;
+            font-size: 15px;
             transition: all 0.3s ease;
         }
 
         .contact-section a:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .info-text {
-            font-size: 13px;
-            color: #999;
-            margin-top: 15px;
-            line-height: 1.6;
         }
 
         @media (max-width: 600px) {
@@ -353,7 +358,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="title">소득세계산기</div>
+            <div class="title">소득세 계산기</div>
             <div class="logo">
                 <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/7068f97b-9e87-471a-8df2-3352fe0a8bea" alt="IAN Consulting Group Logo">
             </div>
@@ -381,9 +386,9 @@
                 <span class="result-label">적용세율</span>
                 <span class="result-value" id="resultRate">0%</span>
             </div>
-            <div class="result-item">
+            <div class="result-item" style="flex-direction: column; align-items: flex-start;">
                 <span class="result-label" style="font-size: 13px; color: #999;">계산식</span>
-                <span class="result-value" id="resultFormula" style="font-size: 14px; color: #666;">0원</span>
+                <span class="result-value" id="resultFormula" style="font-size: 14px; color: #666; text-align: right; width: 100%; margin-top: 4px;">0원</span>
             </div>
             <div class="result-item">
                 <span class="result-label">종합소득세</span>
@@ -392,11 +397,13 @@
         </div>
 
         <div class="contact-section">
-            <div style="font-size: 16px; font-weight: 600;">문의하기</div>
-            <a href="tel:02-715-3535">📞 서진우세무사 (02-715-3535)</a>
-            <div class="info-text">
-                소득세 관련 세금 상담이 필요하신가요?<br>
-                언제든지 편하게 전화 주세요!
+            <div class="contact-section-title">문의하기</div>
+            <div class="contact-line">서진우세무사</div>
+            <div class="contact-line">
+                <a href="tel:02-715-3535">📞 02-715-3535</a>
+            </div>
+            <div class="contact-line">
+                <a href="https://pf.kakao.com/_JxjCrxb" target="_blank" rel="noopener noreferrer"><img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/30e75c1c-f736-485e-a8b9-b7b4c3db1c7c" alt="카카오톡" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;"> 이안세무회계컨설팅</a>
             </div>
         </div>
     </div>
@@ -439,29 +446,35 @@
                         <td>4단계</td>
                         <td>8,800만원 ~ 1.5억원</td>
                         <td>35%</td>
-                        <td>1,406만원</td>
+                        <td>1,544만원</td>
                     </tr>
                     <tr>
                         <td>5단계</td>
                         <td>1.5억원 ~ 3억원</td>
                         <td>38%</td>
-                        <td>1,926만원</td>
+                        <td>1,994만원</td>
                     </tr>
                     <tr>
                         <td>6단계</td>
                         <td>3억원 ~ 5억원</td>
                         <td>40%</td>
-                        <td>2,526만원</td>
+                        <td>2,594만원</td>
                     </tr>
                     <tr>
                         <td>7단계</td>
-                        <td>5억원 이상</td>
+                        <td>5억원 ~ 10억원</td>
                         <td>42%</td>
-                        <td>3,526만원</td>
+                        <td>3,594만원</td>
+                    </tr>
+                    <tr>
+                        <td>8단계</td>
+                        <td>10억원 초과</td>
+                        <td>45%</td>
+                        <td>6,594만원</td>
                     </tr>
                 </tbody>
             </table>
-            <div class="info-text" style="color: #333; margin-top: 20px;">
+            <div style="font-size: 13px; color: #333; margin-top: 20px; line-height: 1.6;">
                 ※ 이 세율표는 2026년 기준입니다.<br>
                 ※ 실제 세액은 공제항목, 감면액 등에 따라 달라질 수 있습니다.<br>
                 ※ 정확한 세금 계산을 위해 세무사와 상담하시기 바랍니다.
@@ -474,10 +487,11 @@
             { min: 0, max: 14000000, rate: 0.06, deduction: 0 },
             { min: 14000000, max: 50000000, rate: 0.15, deduction: 1260000 },
             { min: 50000000, max: 88000000, rate: 0.24, deduction: 5760000 },
-            { min: 88000000, max: 150000000, rate: 0.35, deduction: 14060000 },
-            { min: 150000000, max: 300000000, rate: 0.38, deduction: 19260000 },
-            { min: 300000000, max: 500000000, rate: 0.40, deduction: 25260000 },
-            { min: 500000000, max: Infinity, rate: 0.42, deduction: 35260000 }
+            { min: 88000000, max: 150000000, rate: 0.35, deduction: 15440000 },
+            { min: 150000000, max: 300000000, rate: 0.38, deduction: 19940000 },
+            { min: 300000000, max: 500000000, rate: 0.40, deduction: 25940000 },
+            { min: 500000000, max: 1000000000, rate: 0.42, deduction: 35940000 },
+            { min: 1000000000, max: Infinity, rate: 0.45, deduction: 65940000 }
         ];
 
         const form = document.getElementById('taxForm');
@@ -513,41 +527,6 @@
             }).format(num);
         }
 
-        calculateBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const income = parseInt(incomeInput.value) || 0;
-
-            if (income === 0) {
-                alert('과세표준 금액을 입력해주세요.');
-                incomeInput.focus();
-                return;
-            }
-
-            const result = calculateTax(income);
-
-            document.getElementById('resultIncome').textContent = formatCurrency(income);
-            document.getElementById('resultRate').textContent = result.rate.toFixed(0) + '%';
-            document.getElementById('resultFormula').textContent = result.formula;
-            document.getElementById('resultTax').textContent = formatCurrency(result.tax);
-
-            resultSection.classList.add('show');
-        });
-
-        tableBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            modal.classList.add('show');
-        });
-
-        closeBtn.addEventListener('click', function() {
-            modal.classList.remove('show');
-        });
-
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.classList.remove('show');
-            }
-        });
-
         function performCalculation() {
             const income = parseInt(incomeInput.value.replace(/,/g, '')) || 0;
 
@@ -567,6 +546,26 @@
             resultSection.classList.add('show');
         }
 
+        calculateBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            performCalculation();
+        });
+
+        tableBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            modal.classList.add('show');
+        });
+
+        closeBtn.addEventListener('click', function() {
+            modal.classList.remove('show');
+        });
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+
         incomeInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
@@ -582,11 +581,6 @@
             } else {
                 this.value = '';
             }
-        });
-
-        calculateBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            performCalculation();
         });
     </script>
 </body>
