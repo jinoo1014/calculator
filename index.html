@@ -15,7 +15,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans KR', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 16px;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,7 +27,7 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-width: 600px;
             width: 100%;
-            padding: 32px 24px;
+            padding: 32px 24px 28px;
             position: relative;
         }
 
@@ -35,28 +35,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             border-bottom: 2px solid #f0f0f0;
             padding-bottom: 16px;
-            gap: 12px;
-            flex-wrap: wrap;
         }
 
         .title {
             font-size: 26px;
             font-weight: 700;
             color: #333;
-            flex: 1;
-            min-width: 150px;
         }
 
         .logo {
-            width: 100px;
-            height: 100px;
+            width: 130px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
         }
 
         .logo img {
@@ -72,7 +67,7 @@
         label {
             display: block;
             margin-bottom: 8px;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
             color: #555;
         }
@@ -82,7 +77,7 @@
             padding: 14px 16px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 18px;
             transition: all 0.3s ease;
             font-family: 'Noto Sans KR', sans-serif;
         }
@@ -96,21 +91,21 @@
         .input-unit {
             color: #999;
             font-size: 13px;
-            margin-top: 6px;
+            margin-top: 4px;
         }
 
         .button-group {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
         }
 
         button {
-            padding: 12px 16px;
+            padding: 11px 16px;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -120,15 +115,12 @@
         .btn-calculate {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            grid-column: 1 / -1;
         }
 
         .btn-calculate:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-calculate:active {
-            transform: translateY(0);
         }
 
         .btn-secondary {
@@ -145,9 +137,9 @@
         .result-section {
             background: #f9f9f9;
             border-left: 4px solid #667eea;
-            padding: 18px;
+            padding: 18px 16px;
             border-radius: 8px;
-            margin-bottom: 24px;
+            margin-bottom: 22px;
             display: none;
         }
 
@@ -171,11 +163,11 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 12px;
-            padding-bottom: 12px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
             border-bottom: 1px solid #e0e0e0;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
 
         .result-item:last-child {
@@ -185,16 +177,15 @@
         }
 
         .result-label {
-            font-size: 13px;
+            font-size: 14px;
             color: #666;
             font-weight: 500;
         }
 
         .result-value {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 700;
             color: #333;
-            text-align: right;
         }
 
         .result-value.highlight {
@@ -207,12 +198,13 @@
             align-items: flex-start;
         }
 
-        .result-item.formula .result-value {
-            text-align: right;
-            width: 100%;
-            margin-top: 4px;
+        #resultFormula {
             font-size: 14px;
             color: #666;
+            width: 100%;
+            margin-top: 4px;
+            text-align: right;
+            word-break: keep-all;
         }
 
         .tax-table {
@@ -232,13 +224,13 @@
         }
 
         .tax-table th {
-            padding: 10px 8px;
+            padding: 10px;
             text-align: center;
             font-weight: 600;
         }
 
         .tax-table td {
-            padding: 10px 8px;
+            padding: 10px;
             text-align: right;
             border-bottom: 1px solid #e0e0e0;
         }
@@ -264,7 +256,6 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
-            padding: 16px;
         }
 
         .modal.show {
@@ -276,7 +267,7 @@
             border-radius: 16px;
             padding: 24px;
             max-width: 600px;
-            width: 100%;
+            width: 90%;
             max-height: 80vh;
             overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -286,9 +277,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 12px;
+            padding-bottom: 10px;
         }
 
         .modal-title {
@@ -300,7 +291,7 @@
         .close-btn {
             background: none;
             border: none;
-            font-size: 26px;
+            font-size: 24px;
             color: #999;
             cursor: pointer;
             width: 32px;
@@ -308,7 +299,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0;
         }
 
         .close-btn:hover {
@@ -318,67 +308,77 @@
         .contact-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 18px;
+            padding: 18px 16px 14px;
             border-radius: 8px;
             text-align: center;
-            margin-top: 24px;
+            margin-top: 18px;
         }
 
-        .contact-title {
+        .contact-section-title {
             font-size: 15px;
             font-weight: 600;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
         }
 
-        .contact-line {
-            margin: 8px 0;
+        .contact-section-title span {
+            font-weight: 400;
+            font-size: 14px;
+            margin-left: 6px;
         }
 
-        .contact-section a,
-        .contact-section button {
-            display: inline-block;
-            background: white;
-            color: #667eea;
-            padding: 10px 18px;
-            border-radius: 6px;
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: stretch;
+        }
+
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             font-size: 14px;
-            transition: all 0.3s ease;
+            box-sizing: border-box;
             border: none;
             cursor: pointer;
-            font-family: 'Noto Sans KR', sans-serif;
         }
 
-        .contact-section a:hover,
-        .contact-section button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        .contact-button.phone,
+        .contact-button.kakao-channel {
+            background: #ffffff;
+            color: #667eea;
         }
 
-        .share-btn-yellow {
-            background: #FEE500 !important;
-            color: #000 !important;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+        .contact-button.save-image {
+            background: #fee500;
+            color: #222222;
         }
 
-        .share-btn-yellow img {
+        .contact-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+        }
+
+        .contact-button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .kakao-icon {
             width: 18px;
             height: 18px;
+            object-fit: contain;
+            margin-right: 6px;
         }
 
         @media (max-width: 600px) {
             .container {
-                padding: 20px 16px;
-            }
-
-            .header {
-                margin-bottom: 22px;
-                padding-bottom: 12px;
+                padding: 24px 18px 20px;
             }
 
             .title {
@@ -386,101 +386,30 @@
             }
 
             .logo {
-                width: 80px;
-                height: 80px;
-            }
-
-            .form-group {
-                margin-bottom: 18px;
-            }
-
-            label {
-                font-size: 16px;
+                width: 120px;
+                height: 54px;
             }
 
             input[type="text"] {
-                padding: 12px 14px;
-                font-size: 15px;
-            }
-
-            .button-group {
-                gap: 8px;
-                margin-bottom: 20px;
-            }
-
-            button {
-                padding: 11px 14px;
-                font-size: 15px;
-            }
-
-            .result-section {
-                padding: 14px;
-                margin-bottom: 20px;
-            }
-
-            .result-item {
-                margin-bottom: 10px;
-                padding-bottom: 10px;
-            }
-
-            .result-label {
-                font-size: 12px;
-            }
-
-            .result-value {
-                font-size: 14px;
-            }
-
-            .result-value.highlight {
-                font-size: 18px;
-            }
-
-            .modal-content {
-                padding: 18px;
-            }
-
-            .modal-title {
                 font-size: 16px;
             }
 
-            .tax-table th {
-                padding: 8px 6px;
-                font-size: 12px;
+            .button-group {
+                grid-template-columns: 1fr;
             }
 
-            .tax-table td {
-                padding: 8px 6px;
-                font-size: 12px;
-            }
-
-            .contact-section {
-                padding: 14px;
-                margin-top: 20px;
-            }
-
-            .contact-title {
-                font-size: 14px;
-                margin-bottom: 12px;
-            }
-
-            .contact-line {
-                margin: 6px 0;
-            }
-
-            .contact-section a,
-            .contact-section button {
-                padding: 9px 14px;
-                font-size: 13px;
+            .result-value.highlight {
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="captureArea">
         <div class="header">
             <div class="title">소득세 계산기</div>
             <div class="logo">
-                <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/7068f97b-9e87-471a-8df2-3352fe0a8bea" alt="IAN Consulting Group Logo">
+                <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/36dffe38-349b-4fc6-8318-4854ea1a250e" alt="IAN Consulting Group Logo">
             </div>
         </div>
 
@@ -507,7 +436,7 @@
                 <span class="result-value" id="resultRate">0%</span>
             </div>
             <div class="result-item formula">
-                <span class="result-label">계산식</span>
+                <span class="result-label" style="font-size: 13px; color: #999;">계산식</span>
                 <span class="result-value" id="resultFormula">0원</span>
             </div>
             <div class="result-item">
@@ -517,17 +446,23 @@
         </div>
 
         <div class="contact-section">
-            <div class="contact-title">문의하기 | 서진우세무사</div>
-            <div class="contact-line">
-                <a href="tel:02-715-3535">📞 02-715-3535</a>
+            <div class="contact-section-title">
+                문의하기 <span>| 서진우세무사</span>
             </div>
-            <div class="contact-line">
-                <a href="https://pf.kakao.com/_JxjCrxb" target="_blank" rel="noopener noreferrer">💬 이안세무회계컨설팅</a>
-            </div>
-            <div class="contact-line">
-                <button class="share-btn-yellow" id="shareBtn">
-                    <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/30e75c1c-f736-485e-a8b9-b7b4c3db1c7c" alt="카카오톡">
-                    <span>카카오톡으로 공유하기</span>
+
+            <div class="contact-buttons">
+                <a href="tel:02-715-3535" class="contact-button phone">
+                    📞 02-715-3535
+                </a>
+
+                <a href="https://pf.kakao.com/_JxjCrxb" target="_blank" rel="noopener noreferrer" class="contact-button kakao-channel">
+                    <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/286ce02a-f913-4247-aa36-70c29400f521"
+                         alt="카카오톡 채널" class="kakao-icon">
+                    이안세무회계컨설팅
+                </a>
+
+                <button type="button" class="contact-button save-image" id="saveImageBtn">
+                    📷 사진으로 저장하기
                 </button>
             </div>
         </div>
@@ -599,7 +534,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div style="font-size: 12px; color: #333; margin-top: 18px; line-height: 1.6;">
+            <div style="font-size: 12px; color: #333; margin-top: 14px; line-height: 1.6;">
                 ※ 이 세율표는 2026년 기준입니다.<br>
                 ※ 실제 세액은 공제항목, 감면액 등에 따라 달라질 수 있습니다.<br>
                 ※ 정확한 세금 계산을 위해 세무사와 상담하시기 바랍니다.
@@ -607,17 +542,7 @@
         </div>
     </div>
 
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/latest/kakao.min.js"></script>
     <script>
-        // Kakao SDK 초기화 (여기에 실제 JavaScript 키를 넣으세요)
-        // 카카오 개발자 센터: https://developers.kakao.com
-        // 앱 만들기 → 내 애플리케이션 → 앱 키 → JavaScript 키 복사
-        const KAKAO_APP_KEY = 'YOUR_KAKAO_JAVASCRIPT_KEY_HERE';
-        
-        if (KAKAO_APP_KEY !== 'YOUR_KAKAO_JAVASCRIPT_KEY_HERE') {
-            Kakao.init(KAKAO_APP_KEY);
-        }
-
         const taxBrackets = [
             { min: 0, max: 14000000, rate: 0.06, deduction: 0 },
             { min: 14000000, max: 50000000, rate: 0.15, deduction: 1260000 },
@@ -635,23 +560,7 @@
         const resultSection = document.getElementById('resultSection');
         const modal = document.getElementById('taxModal');
         const closeBtn = document.getElementById('closeBtn');
-        const shareBtn = document.getElementById('shareBtn');
-
-        function calculateTax(income) {
-            if (income < 0) return { tax: 0, rate: 0, formula: '' };
-
-            for (let bracket of taxBrackets) {
-                if (income >= bracket.min && income < bracket.max) {
-                    const tax = Math.floor(income * bracket.rate - bracket.deduction);
-                    const formula = `${formatCurrency(income)} × ${(bracket.rate * 100).toFixed(0)}% - ${formatCurrency(bracket.deduction)}`;
-                    return {
-                        tax: Math.max(0, tax),
-                        rate: bracket.rate * 100,
-                        formula: formula
-                    };
-                }
-            }
-        }
+        const saveImageBtn = document.getElementById('saveImageBtn');
 
         function formatCurrency(num) {
             return new Intl.NumberFormat('ko-KR', {
@@ -662,16 +571,42 @@
             }).format(num);
         }
 
-        function performCalculation() {
-            const income = parseInt(incomeInput.value.replace(/,/g, '')) || 0;
+        function calculateTax(income) {
+            if (income <= 0) {
+                return null;
+            }
 
-            if (income === 0) {
-                alert('과세표준 금액을 입력해주세요.');
+            for (let bracket of taxBrackets) {
+                if (income > bracket.min && income <= bracket.max) {
+                    const taxRaw = income * bracket.rate - bracket.deduction;
+                    const tax = Math.max(0, Math.floor(taxRaw));
+                    const ratePercent = bracket.rate * 100;
+                    const formula = `${formatCurrency(income)} × ${ratePercent.toFixed(0)}% - ${formatCurrency(bracket.deduction)}`;
+                    return {
+                        tax,
+                        rate: ratePercent,
+                        formula
+                    };
+                }
+            }
+            return null;
+        }
+
+        function performCalculation() {
+            const raw = incomeInput.value.replace(/,/g, '');
+            const income = parseInt(raw, 10);
+
+            if (!income || income <= 0) {
+                alert('과세표준 금액을 0보다 큰 숫자로 입력해주세요.');
                 incomeInput.focus();
                 return;
             }
 
             const result = calculateTax(income);
+            if (!result) {
+                alert('세액 계산 중 오류가 발생했습니다.');
+                return;
+            }
 
             document.getElementById('resultIncome').textContent = formatCurrency(income);
             document.getElementById('resultRate').textContent = result.rate.toFixed(0) + '%';
@@ -681,79 +616,169 @@
             resultSection.classList.add('show');
         }
 
-        calculateBtn.addEventListener('click', function(e) {
+        calculateBtn.addEventListener('click', function (e) {
             e.preventDefault();
             performCalculation();
         });
 
-        tableBtn.addEventListener('click', function(e) {
+        tableBtn.addEventListener('click', function (e) {
             e.preventDefault();
             modal.classList.add('show');
         });
 
-        closeBtn.addEventListener('click', function() {
+        closeBtn.addEventListener('click', function () {
             modal.classList.remove('show');
         });
 
-        modal.addEventListener('click', function(e) {
+        modal.addEventListener('click', function (e) {
             if (e.target === modal) {
                 modal.classList.remove('show');
             }
         });
 
-        incomeInput.addEventListener('keypress', function(e) {
+        incomeInput.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 performCalculation();
             }
         });
 
-        // 입력값 실시간 포맷팅 (3자리마다 쉼표, 숫자만 입력)
-        incomeInput.addEventListener('input', function(e) {
+        incomeInput.addEventListener('input', function () {
             let value = this.value.replace(/[^0-9]/g, '');
             if (value) {
-                this.value = parseInt(value).toLocaleString('ko-KR');
+                this.value = parseInt(value, 10).toLocaleString('ko-KR');
             } else {
                 this.value = '';
             }
         });
 
-        // 카카오톡으로 공유하기
-        shareBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            if (KAKAO_APP_KEY === 'YOUR_KAKAO_JAVASCRIPT_KEY_HERE') {
-                alert('📢 카카오톡 공유 설정 안내\n\n1. https://developers.kakao.com 방문\n2. 내 애플리케이션 → 앱 만들기\n3. 앱 키 → JavaScript 키 복사\n4. 이 페이지의 KAKAO_APP_KEY에 붙여넣기\n\n현재는 데모 상태입니다.\n카카오톡 채널로 직접 연결됩니다.');
-                window.open('https://pf.kakao.com/_JxjCrxb', '_blank');
+        function saveResultAsImage() {
+            if (!resultSection.classList.contains('show')) {
+                alert('먼저 소득세를 계산한 다음 사진으로 저장할 수 있습니다.');
                 return;
             }
 
-            if (!Kakao.isInitialized()) {
-                alert('카카오톡 공유 기능을 사용할 수 없습니다.');
-                return;
-            }
+            const incomeText = document.getElementById('resultIncome').textContent;
+            const rateText = document.getElementById('resultRate').textContent;
+            const formulaText = document.getElementById('resultFormula').textContent;
+            const taxText = document.getElementById('resultTax').textContent;
 
-            Kakao.Share.sendDefault({
-                objectType: 'feed',
-                content: {
-                    title: '소득세 계산기',
-                    description: '2026년 종합소득세를 간편하게 계산해보세요!',
-                    imageUrl: 'https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/7068f97b-9e87-471a-8df2-3352fe0a8bea',
-                    link: {
-                        mobileWebUrl: window.location.href,
-                        webUrl: window.location.href
-                    }
-                },
-                buttons: [
-                    {
-                        title: '웹에서 보기',
-                        link: {
-                            mobileWebUrl: window.location.href,
-                            webUrl: window.location.href
-                        }
-                    }
-                ]
+            const canvas = document.createElement('canvas');
+            const width = 800;
+            const height = 600;
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+
+            const gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            const cardX = 60;
+            const cardY = 80;
+            const cardW = width - 120;
+            const cardH = height - 160;
+            ctx.fillStyle = '#ffffff';
+            ctx.roundRect(cardX, cardY, cardW, cardH, 20);
+            ctx.fill();
+
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 28px "Noto Sans KR", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('소득세 계산 결과', width / 2, cardY + 50);
+
+            ctx.textAlign = 'left';
+            ctx.font = '16px "Noto Sans KR", sans-serif';
+
+            let textX = cardX + 40;
+            let textY = cardY + 110;
+            const lineGap = 40;
+
+            ctx.fillStyle = '#666666';
+            ctx.fillText('과세표준', textX, textY);
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 20px "Noto Sans KR", sans-serif';
+            ctx.fillText(incomeText, textX + 140, textY);
+
+            ctx.font = '16px "Noto Sans KR", sans-serif';
+            textY += lineGap;
+            ctx.fillStyle = '#666666';
+            ctx.fillText('적용세율', textX, textY);
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 20px "Noto Sans KR", sans-serif';
+            ctx.fillText(rateText, textX + 140, textY);
+
+            textY += lineGap;
+            ctx.font = '16px "Noto Sans KR", sans-serif';
+            ctx.fillStyle = '#999999';
+            ctx.fillText('계산식', textX, textY);
+
+            ctx.fillStyle = '#555555';
+            ctx.font = '15px "Noto Sans KR", sans-serif';
+            const formulaMaxWidth = cardW - 80;
+            const formulaLines = wrapText(ctx, formulaText, formulaMaxWidth);
+            let formulaY = textY - 4;
+            formulaLines.forEach((line, idx) => {
+                ctx.fillText(line, textX + 140, formulaY + (idx + 1) * 22);
             });
+
+            ctx.font = '16px "Noto Sans KR", sans-serif';
+            ctx.fillStyle = '#666666';
+            const taxLabelY = cardY + cardH - 90;
+            ctx.fillText('종합소득세', textX, taxLabelY);
+            ctx.font = 'bold 26px "Noto Sans KR", sans-serif';
+            ctx.fillStyle = '#667eea';
+            ctx.fillText(taxText, textX + 140, taxLabelY);
+
+            ctx.font = '12px "Noto Sans KR", sans-serif';
+            ctx.fillStyle = '#888888';
+            ctx.textAlign = 'center';
+            ctx.fillText('※ 실제 세액은 공제·감면 등 상황에 따라 달라질 수 있습니다.', width / 2, cardY + cardH - 30);
+
+            const link = document.createElement('a');
+            link.download = '소득세_계산결과.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function wrapText(ctx, text, maxWidth) {
+            const words = text.split(' ');
+            const lines = [];
+            let currentLine = '';
+
+            for (let i = 0; i < words.length; i++) {
+                const testLine = currentLine ? currentLine + ' ' + words[i] : words[i];
+                const metrics = ctx.measureText(testLine);
+                if (metrics.width > maxWidth && currentLine) {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                } else {
+                    currentLine = testLine;
+                }
+            }
+            if (currentLine) lines.push(currentLine);
+            return lines;
+        }
+
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+                const minSize = Math.min(w, h);
+                if (r > minSize / 2) r = minSize / 2;
+                this.beginPath();
+                this.moveTo(x + r, y);
+                this.arcTo(x + w, y, x + w, y + h, r);
+                this.arcTo(x + w, y + h, x, y + h, r);
+                this.arcTo(x, y + h, x, y, r);
+                this.arcTo(x, y, x + w, y, r);
+                this.closePath();
+                return this;
+            };
+        }
+
+        saveImageBtn.addEventListener('click', function () {
+            saveResultAsImage();
         });
     </script>
 </body>
