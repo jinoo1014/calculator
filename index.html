@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>소득세 계산기</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans KR', sans-serif;
@@ -28,13 +24,13 @@
             max-width: 600px;
             width: 100%;
             padding: 32px 24px 28px;
-            position: relative;
         }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 16px;
             margin-bottom: 24px;
             border-bottom: 2px solid #f0f0f0;
             padding-bottom: 16px;
@@ -44,19 +40,657 @@
             font-size: 26px;
             font-weight: 700;
             color: #333;
+            flex: 1;
         }
 
         .logo {
-            width: 130px;
-            height: 60px;
+            width: 146px;
+            height: 70px;
+            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .logo img {
-            max-width: 100%;
-            max-height: 100%;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .form-group { margin-bottom: 22px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-unit {
+            color: #999;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        button {
+            padding: 11px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .btn-calculate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            grid-column: 1 / -1;
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            background: #efefef;
+            border-color: #ccc;
+        }
+
+        .result-section {
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+            padding: 18px 16px;
+            border-radius: 8px;
+            margin-bottom: 22px;
+            display: none;
+        }
+
+        .result-section.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .result-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-size: 17px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .result-value.highlight {
+            color: #667eea;
+            font-size: 22px;
+        }
+
+        .result-item.formula {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        #resultFormula {
+            font-size: 14px;
+            color: #666;
+            width: 100%;
+            margin-top: 4px;
+            text-align: right;
+            word-break: keep-all;
+        }
+
+        .tax-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .tax-table thead {
+            background: #667eea;
+            color: white;
+        }
+
+        .tax-table th {
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .tax-table td {
+            padding: 10px;
+            text-align: right;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .tax-table td:first-child {
+            text-align: left;
+            background: #f9f9f9;
+            font-weight: 500;
+        }
+
+        .tax-table tbody tr:last-child td { border-bottom: none; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.show { display: flex; }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .close-btn:hover { color: #333; }
+
+        .contact-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 16px 14px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 18px;
+        }
+
+        .contact-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .contact-section-title span {
+            font-weight: 400;
+            font-size: 14px;
+            margin-left: 6px;
+        }
+
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: stretch;
+        }
+
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 46px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-sizing: border-box;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .contact-button.phone,
+        .contact-button.save-image {
+            background: #ffffff;
+            color: #667eea;
+        }
+
+        .contact-button.kakao-channel {
+            background: #fee500;
+            color: #222222;
+        }
+
+        .contact-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+        }
+
+        .contact-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .kakao-icon {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            margin-right: 6px;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 24px 18px 20px; }
+            .title { font-size: 22px; }
+            .logo { width: 132px; height: 62px; }
+            input[type="text"] { font-size: 16px; }
+            .button-group { grid-template-columns: 1fr; }
+            .result-value.highlight { font-size: 20px; }
+        }
+
+        @media (max-width: 420px) {
+            body { padding: 12px; }
+            .container { padding: 20px 14px 18px; }
+            .header { align-items: flex-start; }
+            .title { font-size: 20px; }
+            .logo { width: 118px; height: 56px; }
+            .contact-button { font-size: 13.5px; }
+            .tax-table { font-size: 12px; }
+            .tax-table th, .tax-table td { padding: 8px 6px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">소득세 계산기</div>
+            <div class="logo">
+                <img src="./assets/ian-2.jpg" alt="이안 로고">
+            </div>
+        </div>
+
+        <form id="taxForm">
+            <div class="form-group">
+                <label for="taxableIncome">과세표준 금액</label>
+                <input type="text" id="taxableIncome" placeholder="금액을 입력해주세요" inputmode="numeric">
+                <div class="input-unit">* 원(₩) 단위로 입력해주세요</div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn-calculate" id="calculateBtn">계산하기</button>
+                <button type="button" class="btn-secondary" id="tableBtn">현재 소득세율표 보기</button>
+            </div>
+        </form>
+
+        <div class="result-section" id="resultSection">
+            <div class="result-item">
+                <span class="result-label">과세표준</span>
+                <span class="result-value" id="resultIncome">0원</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">적용세율</span>
+                <span class="result-value" id="resultRate">0%</span>
+            </div>
+            <div class="result-item formula">
+                <span class="result-label" style="font-size: 13px; color: #999;">계산식</span>
+                <span class="result-value" id="resultFormula">0원</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">종합소득세</span>
+                <span class="result-value highlight" id="resultTax">0원</span>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <div class="contact-section-title">문의하기 <span>| 서진우세무사</span></div>
+            <div class="contact-buttons">
+                <a href="tel:02-715-3535" class="contact-button phone">📞 02-715-3535</a>
+                <a href="https://pf.kakao.com/_JxjCrxb" target="_blank" rel="noopener noreferrer" class="contact-button kakao-channel">
+                    <img src="./assets/kakaotogcaeneol-2.jpg" alt="카카오톡 채널" class="kakao-icon">
+                    이안세무회계컨설팅
+                </a>
+                <button type="button" class="contact-button save-image" id="saveImageBtn">📷 사진으로 저장하기</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="taxModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">2026년 종합소득세율표</div>
+                <button class="close-btn" id="closeBtn">&times;</button>
+            </div>
+            <table class="tax-table">
+                <thead>
+                    <tr>
+                        <th>구간</th>
+                        <th>과세표준</th>
+                        <th>세율</th>
+                        <th>누진공제액</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1단계</td><td>0 ~ 1,400만원</td><td>6%</td><td>0원</td></tr>
+                    <tr><td>2단계</td><td>1,400만원 ~ 5,000만원</td><td>15%</td><td>126만원</td></tr>
+                    <tr><td>3단계</td><td>5,000만원 ~ 8,800만원</td><td>24%</td><td>576만원</td></tr>
+                    <tr><td>4단계</td><td>8,800만원 ~ 1.5억원</td><td>35%</td><td>1,544만원</td></tr>
+                    <tr><td>5단계</td><td>1.5억원 ~ 3억원</td><td>38%</td><td>1,994만원</td></tr>
+                    <tr><td>6단계</td><td>3억원 ~ 5억원</td><td>40%</td><td>2,594만원</td></tr>
+                    <tr><td>7단계</td><td>5억원 ~ 10억원</td><td>42%</td><td>3,594만원</td></tr>
+                    <tr><td>8단계</td><td>10억원 초과</td><td>45%</td><td>6,594만원</td></tr>
+                </tbody>
+            </table>
+            <div style="font-size: 12px; color: #333; margin-top: 14px; line-height: 1.6;">
+                ※ 이 세율표는 2026년 기준입니다.<br>
+                ※ 실제 세액은 공제항목, 감면액 등에 따라 달라질 수 있습니다.<br>
+                ※ 정확한 세금 계산을 위해 세무사와 상담하시기 바랍니다.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const taxBrackets = [
+            { min: 0, max: 14000000, rate: 0.06, deduction: 0 },
+            { min: 14000000, max: 50000000, rate: 0.15, deduction: 1260000 },
+            { min: 50000000, max: 88000000, rate: 0.24, deduction: 5760000 },
+            { min: 88000000, max: 150000000, rate: 0.35, deduction: 15440000 },
+            { min: 150000000, max: 300000000, rate: 0.38, deduction: 19940000 },
+            { min: 300000000, max: 500000000, rate: 0.40, deduction: 25940000 },
+            { min: 500000000, max: 1000000000, rate: 0.42, deduction: 35940000 },
+            { min: 1000000000, max: Infinity, rate: 0.45, deduction: 65940000 }
+        ];
+
+        const incomeInput = document.getElementById('taxableIncome');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const tableBtn = document.getElementById('tableBtn');
+        const resultSection = document.getElementById('resultSection');
+        const modal = document.getElementById('taxModal');
+        const closeBtn = document.getElementById('closeBtn');
+        const saveImageBtn = document.getElementById('saveImageBtn');
+
+        function formatCurrency(num) {
+            return new Intl.NumberFormat('ko-KR', {
+                style: 'currency',
+                currency: 'KRW',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(num);
+        }
+
+        function calculateTax(income) {
+            if (income <= 0) return null;
+            for (let bracket of taxBrackets) {
+                if (income > bracket.min && income <= bracket.max) {
+                    const tax = Math.max(0, Math.floor(income * bracket.rate - bracket.deduction));
+                    return {
+                        tax,
+                        rate: bracket.rate * 100,
+                        formula: `${formatCurrency(income)} × ${(bracket.rate * 100).toFixed(0)}% - ${formatCurrency(bracket.deduction)}`
+                    };
+                }
+            }
+            return null;
+        }
+
+        function performCalculation() {
+            const income = parseInt((incomeInput.value || '').replace(/,/g, ''), 10);
+            if (!income || income <= 0) {
+                alert('과세표준 금액을 0보다 큰 숫자로 입력해주세요.');
+                incomeInput.focus();
+                return;
+            }
+
+            const result = calculateTax(income);
+            if (!result) {
+                alert('세액 계산 중 오류가 발생했습니다.');
+                return;
+            }
+
+            document.getElementById('resultIncome').textContent = formatCurrency(income);
+            document.getElementById('resultRate').textContent = result.rate.toFixed(0) + '%';
+            document.getElementById('resultFormula').textContent = result.formula;
+            document.getElementById('resultTax').textContent = formatCurrency(result.tax);
+            resultSection.classList.add('show');
+        }
+
+        calculateBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            performCalculation();
+        });
+
+        tableBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            modal.classList.add('show');
+        });
+
+        closeBtn.addEventListener('click', function() {
+            modal.classList.remove('show');
+        });
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) modal.classList.remove('show');
+        });
+
+        incomeInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performCalculation();
+            }
+        });
+
+        incomeInput.addEventListener('input', function() {
+            let value = this.value.replace(/[^0-9]/g, '');
+            this.value = value ? parseInt(value, 10).toLocaleString('ko-KR') : '';
+        });
+
+        function wrapText(ctx, text, maxWidth) {
+            const words = text.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                const testLine = currentLine ? currentLine + ' ' + word : word;
+                if (ctx.measureText(testLine).width > maxWidth && currentLine) {
+                    lines.push(currentLine);
+                    currentLine = word;
+                } else {
+                    currentLine = testLine;
+                }
+            }
+            if (currentLine) lines.push(currentLine);
+            return lines;
+        }
+
+        function roundRect(ctx, x, y, w, h, r) {
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.arcTo(x + w, y, x + w, y + h, r);
+            ctx.arcTo(x + w, y + h, x, y + h, r);
+            ctx.arcTo(x, y + h, x, y, r);
+            ctx.arcTo(x, y, x + w, y, r);
+            ctx.closePath();
+        }
+
+        function saveResultAsImage() {
+            if (!resultSection.classList.contains('show')) {
+                alert('먼저 소득세를 계산한 다음 사진으로 저장할 수 있습니다.');
+                return;
+            }
+
+            const incomeText = document.getElementById('resultIncome').textContent;
+            const rateText = document.getElementById('resultRate').textContent;
+            const formulaText = document.getElementById('resultFormula').textContent;
+            const taxText = document.getElementById('resultTax').textContent;
+
+            const canvas = document.createElement('canvas');
+            const width = 800;
+            const height = 600;
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+
+            const gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            const cardX = 60;
+            const cardY = 80;
+            const cardW = width - 120;
+            const cardH = height - 160;
+            ctx.fillStyle = '#ffffff';
+            roundRect(ctx, cardX, cardY, cardW, cardH, 20);
+            ctx.fill();
+
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 28px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('소득세 계산 결과', width / 2, cardY + 50);
+
+            let textX = cardX + 40;
+            let textY = cardY + 110;
+            const lineGap = 42;
+
+            ctx.textAlign = 'left';
+            ctx.font = '16px sans-serif';
+            ctx.fillStyle = '#666666';
+            ctx.fillText('과세표준', textX, textY);
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 20px sans-serif';
+            ctx.fillText(incomeText, textX + 140, textY);
+
+            textY += lineGap;
+            ctx.font = '16px sans-serif';
+            ctx.fillStyle = '#666666';
+            ctx.fillText('적용세율', textX, textY);
+            ctx.fillStyle = '#333333';
+            ctx.font = 'bold 20px sans-serif';
+            ctx.fillText(rateText, textX + 140, textY);
+
+            textY += lineGap;
+            ctx.font = '16px sans-serif';
+            ctx.fillStyle = '#999999';
+            ctx.fillText('계산식', textX, textY);
+            ctx.fillStyle = '#555555';
+            ctx.font = '15px sans-serif';
+            const lines = wrapText(ctx, formulaText, cardW - 220);
+            lines.forEach((line, idx) => {
+                ctx.fillText(line, textX + 140, textY + (idx + 1) * 22);
+            });
+
+            const taxLabelY = cardY + cardH - 90;
+            ctx.font = '16px sans-serif';
+            ctx.fillStyle = '#666666';
+            ctx.fillText('종합소득세', textX, taxLabelY);
+            ctx.font = 'bold 26px sans-serif';
+            ctx.fillStyle = '#667eea';
+            ctx.fillText(taxText, textX + 140, taxLabelY);
+
+            ctx.font = '12px sans-serif';
+            ctx.fillStyle = '#888888';
+            ctx.textAlign = 'center';
+            ctx.fillText('※ 실제 세액은 공제·감면 등 상황에 따라 달라질 수 있습니다.', width / 2, cardY + cardH - 30);
+
+            const dataUrl = canvas.toDataURL('image/png');
+            const win = window.open('', '_blank');
+            if (win) {
+                win.document.write('<html><head><title>소득세 계산 결과</title><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body style="margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;"><img src="' + dataUrl + '" style="max-width:100%;height:auto;display:block;" alt="소득세 계산 결과 이미지"></body></html>');
+                win.document.close();
+            } else {
+                alert('팝업이 차단되어 있습니다. 브라우저에서 팝업 허용 후 다시 시도해주세요.');
+            }
+        }
+
+        saveImageBtn.addEventListener('click', saveResultAsImage);
+    </script>
+</body>
+</html>            max-height: 100%;
             object-fit: contain;
         }
 
