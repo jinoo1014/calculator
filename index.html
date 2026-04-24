@@ -409,7 +409,7 @@
         <div class="header">
             <div class="title">소득세 계산기</div>
             <div class="logo">
-                <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/36dffe38-349b-4fc6-8318-4854ea1a250e" alt="IAN Consulting Group Logo">
+                <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/bf23e697-120a-41ad-908d-b0ce506c2342" alt="IAN Consulting Group Logo">
             </div>
         </div>
 
@@ -456,7 +456,7 @@
                 </a>
 
                 <a href="https://pf.kakao.com/_JxjCrxb" target="_blank" rel="noopener noreferrer" class="contact-button kakao-channel">
-                    <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/286ce02a-f913-4247-aa36-70c29400f521"
+                    <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/103888f8-094f-4752-91dc-99e6407f4cd7"
                          alt="카카오톡 채널" class="kakao-icon">
                     이안세무회계컨설팅
                 </a>
@@ -737,10 +737,19 @@
             ctx.textAlign = 'center';
             ctx.fillText('※ 실제 세액은 공제·감면 등 상황에 따라 달라질 수 있습니다.', width / 2, cardY + cardH - 30);
 
-            const link = document.createElement('a');
-            link.download = '소득세_계산결과.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
+            const dataUrl = canvas.toDataURL('image/png');
+            const win = window.open('', '_blank');
+            if (win) {
+                win.document.write('<html><head><title>소득세 계산 결과</title></head><body style="margin:0;">');
+                win.document.write('<img src="' + dataUrl + '" style="width:100%;height:auto;display:block;" />');
+                win.document.write('</body></html>');
+                win.document.close();
+            } else {
+                const link = document.createElement('a');
+                link.href = dataUrl;
+                link.target = '_blank';
+                link.click();
+            }
         }
 
         function wrapText(ctx, text, maxWidth) {
