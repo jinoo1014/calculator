@@ -6,7 +6,6 @@
     <title>소득세 계산기</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans KR', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -16,7 +15,6 @@
             justify-content: center;
             align-items: center;
         }
-
         .container {
             background: white;
             border-radius: 16px;
@@ -25,7 +23,6 @@
             width: 100%;
             padding: 32px 24px 28px;
         }
-
         .header {
             display: flex;
             justify-content: space-between;
@@ -35,14 +32,12 @@
             border-bottom: 2px solid #f0f0f0;
             padding-bottom: 16px;
         }
-
         .title {
             font-size: 26px;
             font-weight: 700;
             color: #333;
             flex: 1;
         }
-
         .logo {
             width: 146px;
             height: 70px;
@@ -51,16 +46,13 @@
             align-items: center;
             justify-content: center;
         }
-
         .logo img {
             width: 100%;
             height: 100%;
             object-fit: contain;
             display: block;
         }
-
         .form-group { margin-bottom: 22px; }
-
         label {
             display: block;
             margin-bottom: 8px;
@@ -68,7 +60,6 @@
             font-weight: 600;
             color: #555;
         }
-
         input[type="text"] {
             width: 100%;
             padding: 14px 16px;
@@ -78,26 +69,13 @@
             transition: all 0.3s ease;
             font-family: 'Noto Sans KR', sans-serif;
         }
-
         input[type="text"]:focus {
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
-
-        .input-unit {
-            color: #999;
-            font-size: 13px;
-            margin-top: 4px;
-        }
-
-        .button-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 22px;
-        }
-
+        .input-unit { color:#999; font-size:13px; margin-top:4px; }
+        .button-group { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:22px; }
         button {
             padding: 11px 16px;
             border: none;
@@ -108,133 +86,48 @@
             transition: all 0.25s ease;
             font-family: 'Noto Sans KR', sans-serif;
         }
-
         .btn-calculate {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             grid-column: 1 / -1;
         }
-
-        .btn-calculate:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-secondary {
-            background: #f5f5f5;
-            color: #333;
-            border: 2px solid #e0e0e0;
-        }
-
-        .btn-secondary:hover {
-            background: #efefef;
-            border-color: #ccc;
-        }
-
+        .btn-calculate:hover { transform: translateY(-1px); box-shadow:0 8px 20px rgba(102,126,234,0.3); }
+        .btn-secondary { background:#f5f5f5; color:#333; border:2px solid #e0e0e0; }
+        .btn-secondary:hover { background:#efefef; border-color:#ccc; }
         .result-section {
-            background: #f9f9f9;
-            border-left: 4px solid #667eea;
-            padding: 18px 16px;
-            border-radius: 8px;
-            margin-bottom: 22px;
-            display: none;
+            background:#f9f9f9;
+            border-left:4px solid #667eea;
+            padding:18px 16px;
+            border-radius:8px;
+            margin-bottom:22px;
+            display:none;
         }
-
-        .result-section.show {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #e0e0e0;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .result-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .result-label {
-            font-size: 14px;
-            color: #666;
-            font-weight: 500;
-        }
-
-        .result-value {
-            font-size: 17px;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .result-value.highlight {
-            color: #667eea;
-            font-size: 22px;
-        }
-
-        .result-item.formula {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        #resultFormula {
-            font-size: 14px;
-            color: #666;
-            width: 100%;
-            margin-top: 4px;
-            text-align: right;
-            word-break: keep-all;
-        }
-
-        .tax-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 13px;
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .tax-table thead {
-            background: #667eea;
+        .result-section.show { display:block; animation:slideIn 0.3s ease; }
+        @keyframes slideIn { from{opacity:0;transform:translateY(-10px);} to{opacity:1;transform:translateY(0);} }
+        .result-item { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #e0e0e0; flex-wrap:wrap; gap:8px; }
+        .result-item:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+        .result-label { font-size:14px; color:#666; font-weight:500; }
+        .result-value { font-size:17px; font-weight:700; color:#333; }
+        .result-value.highlight { color:#667eea; font-size:22px; }
+        .result-item.formula { flex-direction:column; align-items:flex-start; }
+        #resultFormula { font-size:14px; color:#666; width:100%; margin-top:4px; text-align:right; word-break:keep-all; }
+        .contact-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-        }
-
-        .tax-table th {
-            padding: 10px;
+            padding: 18px 16px 14px;
+            border-radius: 8px;
             text-align: center;
-            font-weight: 600;
+            margin-top: 18px;
         }
-
-        .tax-table td {
-            padding: 10px;
-            text-align: right;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .tax-table td:first-child {
-            text-align: left;
-            background: #f9f9f9;
-            font-weight: 500;
-        }
-
-        .tax-table tbody tr:last-child td { border-bottom: none; }
-
-        .modal {
+        .contact-section-title { font-size:15px; font-weight:600; margin-bottom:10px; }
+        .contact-section-title span { font-weight:400; font-size:14px; margin-left:6px; }
+        .contact-buttons { display:flex; flex-direction:column; gap:8px; align-items:stretch; }
+        .contact-button { display:inline-flex; align-items:center; justify-content:center; width:100%; min-height:46px; padding:10px 14px; border-radius:8px; text-decoration:none; font-weight:600; font-size:14px; box-sizing:border-box; border:none; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+        .contact-button.phone,
+        .contact-button.save-image { background:#ffffff; color:#667eea; }
+        .contact-button.kakao-channel { background:#fee500; color:#222222; }
+        .kakao-icon { width:18px; height:18px; object-fit:contain; margin-right:6px; display:block; }
+                .modal {
             display: none;
             position: fixed;
             inset: 0;
@@ -246,11 +139,9 @@
             justify-content: center;
             padding: 20px;
         }
-
         .modal.show { display: flex; }
-
         .modal-content {
-            background: white;
+            background: #ffffff;
             border-radius: 16px;
             padding: 24px;
             max-width: 600px;
@@ -259,7 +150,6 @@
             overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
-
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -268,13 +158,11 @@
             border-bottom: 2px solid #f0f0f0;
             padding-bottom: 10px;
         }
-
         .modal-title {
             font-size: 18px;
             font-weight: 700;
             color: #333;
         }
-
         .close-btn {
             background: none;
             border: none;
@@ -288,559 +176,7 @@
             justify-content: center;
             padding: 0;
         }
-
         .close-btn:hover { color: #333; }
-
-        .contact-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 18px 16px 14px;
-            border-radius: 8px;
-            text-align: center;
-            margin-top: 18px;
-        }
-
-        .contact-section-title {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .contact-section-title span {
-            font-weight: 400;
-            font-size: 14px;
-            margin-left: 6px;
-        }
-
-        .contact-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: stretch;
-        }
-
-        .contact-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            min-height: 46px;
-            padding: 10px 14px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            box-sizing: border-box;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .contact-button.phone,
-        .contact-button.save-image {
-            background: #ffffff;
-            color: #667eea;
-        }
-
-        .contact-button.kakao-channel {
-            background: #fee500;
-            color: #222222;
-        }
-
-        .contact-button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
-        }
-
-        .contact-button:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .kakao-icon {
-            width: 18px;
-            height: 18px;
-            object-fit: contain;
-            margin-right: 6px;
-            display: block;
-        }
-
-        @media (max-width: 600px) {
-            .container { padding: 24px 18px 20px; }
-            .title { font-size: 22px; }
-            .logo { width: 132px; height: 62px; }
-            input[type="text"] { font-size: 16px; }
-            .button-group { grid-template-columns: 1fr; }
-            .result-value.highlight { font-size: 20px; }
-        }
-
-        @media (max-width: 420px) {
-            body { padding: 12px; }
-            .container { padding: 20px 14px 18px; }
-            .header { align-items: flex-start; }
-            .title { font-size: 20px; }
-            .logo { width: 118px; height: 56px; }
-            .contact-button { font-size: 13.5px; }
-            .tax-table { font-size: 12px; }
-            .tax-table th, .tax-table td { padding: 8px 6px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="title">소득세 계산기</div>
-            <div class="logo">
-                <img src="./assets/ian-2.jpg" alt="이안 로고">
-            </div>
-        </div>
-
-        <form id="taxForm">
-            <div class="form-group">
-                <label for="taxableIncome">과세표준 금액</label>
-                <input type="text" id="taxableIncome" placeholder="금액을 입력해주세요" inputmode="numeric">
-                <div class="input-unit">* 원(₩) 단위로 입력해주세요</div>
-            </div>
-
-            <div class="button-group">
-                <button type="button" class="btn-calculate" id="calculateBtn">계산하기</button>
-                <button type="button" class="btn-secondary" id="tableBtn">현재 소득세율표 보기</button>
-            </div>
-        </form>
-
-        <div class="result-section" id="resultSection">
-            <div class="result-item">
-                <span class="result-label">과세표준</span>
-                <span class="result-value" id="resultIncome">0원</span>
-            </div>
-            <div class="result-item">
-                <span class="result-label">적용세율</span>
-                <span class="result-value" id="resultRate">0%</span>
-            </div>
-            <div class="result-item formula">
-                <span class="result-label" style="font-size: 13px; color: #999;">계산식</span>
-                <span class="result-value" id="resultFormula">0원</span>
-            </div>
-            <div class="result-item">
-                <span class="result-label">종합소득세</span>
-                <span class="result-value highlight" id="resultTax">0원</span>
-            </div>
-        </div>
-
-        <div class="contact-section">
-            <div class="contact-section-title">문의하기 <span>| 서진우세무사</span></div>
-            <div class="contact-buttons">
-                <a href="tel:02-715-3535" class="contact-button phone">📞 02-715-3535</a>
-                <a href="https://pf.kakao.com/_JxjCrxb" target="_blank" rel="noopener noreferrer" class="contact-button kakao-channel">
-                    <img src="./assets/kakaotogcaeneol-2.jpg" alt="카카오톡 채널" class="kakao-icon">
-                    이안세무회계컨설팅
-                </a>
-                <button type="button" class="contact-button save-image" id="saveImageBtn">📷 사진으로 저장하기</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="taxModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">2026년 종합소득세율표</div>
-                <button class="close-btn" id="closeBtn">&times;</button>
-            </div>
-            <table class="tax-table">
-                <thead>
-                    <tr>
-                        <th>구간</th>
-                        <th>과세표준</th>
-                        <th>세율</th>
-                        <th>누진공제액</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>1단계</td><td>0 ~ 1,400만원</td><td>6%</td><td>0원</td></tr>
-                    <tr><td>2단계</td><td>1,400만원 ~ 5,000만원</td><td>15%</td><td>126만원</td></tr>
-                    <tr><td>3단계</td><td>5,000만원 ~ 8,800만원</td><td>24%</td><td>576만원</td></tr>
-                    <tr><td>4단계</td><td>8,800만원 ~ 1.5억원</td><td>35%</td><td>1,544만원</td></tr>
-                    <tr><td>5단계</td><td>1.5억원 ~ 3억원</td><td>38%</td><td>1,994만원</td></tr>
-                    <tr><td>6단계</td><td>3억원 ~ 5억원</td><td>40%</td><td>2,594만원</td></tr>
-                    <tr><td>7단계</td><td>5억원 ~ 10억원</td><td>42%</td><td>3,594만원</td></tr>
-                    <tr><td>8단계</td><td>10억원 초과</td><td>45%</td><td>6,594만원</td></tr>
-                </tbody>
-            </table>
-            <div style="font-size: 12px; color: #333; margin-top: 14px; line-height: 1.6;">
-                ※ 이 세율표는 2026년 기준입니다.<br>
-                ※ 실제 세액은 공제항목, 감면액 등에 따라 달라질 수 있습니다.<br>
-                ※ 정확한 세금 계산을 위해 세무사와 상담하시기 바랍니다.
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const taxBrackets = [
-            { min: 0, max: 14000000, rate: 0.06, deduction: 0 },
-            { min: 14000000, max: 50000000, rate: 0.15, deduction: 1260000 },
-            { min: 50000000, max: 88000000, rate: 0.24, deduction: 5760000 },
-            { min: 88000000, max: 150000000, rate: 0.35, deduction: 15440000 },
-            { min: 150000000, max: 300000000, rate: 0.38, deduction: 19940000 },
-            { min: 300000000, max: 500000000, rate: 0.40, deduction: 25940000 },
-            { min: 500000000, max: 1000000000, rate: 0.42, deduction: 35940000 },
-            { min: 1000000000, max: Infinity, rate: 0.45, deduction: 65940000 }
-        ];
-
-        const incomeInput = document.getElementById('taxableIncome');
-        const calculateBtn = document.getElementById('calculateBtn');
-        const tableBtn = document.getElementById('tableBtn');
-        const resultSection = document.getElementById('resultSection');
-        const modal = document.getElementById('taxModal');
-        const closeBtn = document.getElementById('closeBtn');
-        const saveImageBtn = document.getElementById('saveImageBtn');
-
-        function formatCurrency(num) {
-            return new Intl.NumberFormat('ko-KR', {
-                style: 'currency',
-                currency: 'KRW',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(num);
-        }
-
-        function calculateTax(income) {
-            if (income <= 0) return null;
-            for (let bracket of taxBrackets) {
-                if (income > bracket.min && income <= bracket.max) {
-                    const tax = Math.max(0, Math.floor(income * bracket.rate - bracket.deduction));
-                    return {
-                        tax,
-                        rate: bracket.rate * 100,
-                        formula: `${formatCurrency(income)} × ${(bracket.rate * 100).toFixed(0)}% - ${formatCurrency(bracket.deduction)}`
-                    };
-                }
-            }
-            return null;
-        }
-
-        function performCalculation() {
-            const income = parseInt((incomeInput.value || '').replace(/,/g, ''), 10);
-            if (!income || income <= 0) {
-                alert('과세표준 금액을 0보다 큰 숫자로 입력해주세요.');
-                incomeInput.focus();
-                return;
-            }
-
-            const result = calculateTax(income);
-            if (!result) {
-                alert('세액 계산 중 오류가 발생했습니다.');
-                return;
-            }
-
-            document.getElementById('resultIncome').textContent = formatCurrency(income);
-            document.getElementById('resultRate').textContent = result.rate.toFixed(0) + '%';
-            document.getElementById('resultFormula').textContent = result.formula;
-            document.getElementById('resultTax').textContent = formatCurrency(result.tax);
-            resultSection.classList.add('show');
-        }
-
-        calculateBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            performCalculation();
-        });
-
-        tableBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            modal.classList.add('show');
-        });
-
-        closeBtn.addEventListener('click', function() {
-            modal.classList.remove('show');
-        });
-
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) modal.classList.remove('show');
-        });
-
-        incomeInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                performCalculation();
-            }
-        });
-
-        incomeInput.addEventListener('input', function() {
-            let value = this.value.replace(/[^0-9]/g, '');
-            this.value = value ? parseInt(value, 10).toLocaleString('ko-KR') : '';
-        });
-
-        function wrapText(ctx, text, maxWidth) {
-            const words = text.split(' ');
-            const lines = [];
-            let currentLine = '';
-            for (const word of words) {
-                const testLine = currentLine ? currentLine + ' ' + word : word;
-                if (ctx.measureText(testLine).width > maxWidth && currentLine) {
-                    lines.push(currentLine);
-                    currentLine = word;
-                } else {
-                    currentLine = testLine;
-                }
-            }
-            if (currentLine) lines.push(currentLine);
-            return lines;
-        }
-
-        function roundRect(ctx, x, y, w, h, r) {
-            ctx.beginPath();
-            ctx.moveTo(x + r, y);
-            ctx.arcTo(x + w, y, x + w, y + h, r);
-            ctx.arcTo(x + w, y + h, x, y + h, r);
-            ctx.arcTo(x, y + h, x, y, r);
-            ctx.arcTo(x, y, x + w, y, r);
-            ctx.closePath();
-        }
-
-        function saveResultAsImage() {
-            if (!resultSection.classList.contains('show')) {
-                alert('먼저 소득세를 계산한 다음 사진으로 저장할 수 있습니다.');
-                return;
-            }
-
-            const incomeText = document.getElementById('resultIncome').textContent;
-            const rateText = document.getElementById('resultRate').textContent;
-            const formulaText = document.getElementById('resultFormula').textContent;
-            const taxText = document.getElementById('resultTax').textContent;
-
-            const canvas = document.createElement('canvas');
-            const width = 800;
-            const height = 600;
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-
-            const gradient = ctx.createLinearGradient(0, 0, width, height);
-            gradient.addColorStop(0, '#667eea');
-            gradient.addColorStop(1, '#764ba2');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, width, height);
-
-            const cardX = 60;
-            const cardY = 80;
-            const cardW = width - 120;
-            const cardH = height - 160;
-            ctx.fillStyle = '#ffffff';
-            roundRect(ctx, cardX, cardY, cardW, cardH, 20);
-            ctx.fill();
-
-            ctx.fillStyle = '#333333';
-            ctx.font = 'bold 28px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('소득세 계산 결과', width / 2, cardY + 50);
-
-            let textX = cardX + 40;
-            let textY = cardY + 110;
-            const lineGap = 42;
-
-            ctx.textAlign = 'left';
-            ctx.font = '16px sans-serif';
-            ctx.fillStyle = '#666666';
-            ctx.fillText('과세표준', textX, textY);
-            ctx.fillStyle = '#333333';
-            ctx.font = 'bold 20px sans-serif';
-            ctx.fillText(incomeText, textX + 140, textY);
-
-            textY += lineGap;
-            ctx.font = '16px sans-serif';
-            ctx.fillStyle = '#666666';
-            ctx.fillText('적용세율', textX, textY);
-            ctx.fillStyle = '#333333';
-            ctx.font = 'bold 20px sans-serif';
-            ctx.fillText(rateText, textX + 140, textY);
-
-            textY += lineGap;
-            ctx.font = '16px sans-serif';
-            ctx.fillStyle = '#999999';
-            ctx.fillText('계산식', textX, textY);
-            ctx.fillStyle = '#555555';
-            ctx.font = '15px sans-serif';
-            const lines = wrapText(ctx, formulaText, cardW - 220);
-            lines.forEach((line, idx) => {
-                ctx.fillText(line, textX + 140, textY + (idx + 1) * 22);
-            });
-
-            const taxLabelY = cardY + cardH - 90;
-            ctx.font = '16px sans-serif';
-            ctx.fillStyle = '#666666';
-            ctx.fillText('종합소득세', textX, taxLabelY);
-            ctx.font = 'bold 26px sans-serif';
-            ctx.fillStyle = '#667eea';
-            ctx.fillText(taxText, textX + 140, taxLabelY);
-
-            ctx.font = '12px sans-serif';
-            ctx.fillStyle = '#888888';
-            ctx.textAlign = 'center';
-            ctx.fillText('※ 실제 세액은 공제·감면 등 상황에 따라 달라질 수 있습니다.', width / 2, cardY + cardH - 30);
-
-            const dataUrl = canvas.toDataURL('image/png');
-            const win = window.open('', '_blank');
-            if (win) {
-                win.document.write('<html><head><title>소득세 계산 결과</title><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body style="margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;"><img src="' + dataUrl + '" style="max-width:100%;height:auto;display:block;" alt="소득세 계산 결과 이미지"></body></html>');
-                win.document.close();
-            } else {
-                alert('팝업이 차단되어 있습니다. 브라우저에서 팝업 허용 후 다시 시도해주세요.');
-            }
-        }
-
-        saveImageBtn.addEventListener('click', saveResultAsImage);
-    </script>
-</body>
-</html>            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .form-group {
-            margin-bottom: 22px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 20px;
-            font-weight: 600;
-            color: #555;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            font-family: 'Noto Sans KR', sans-serif;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .input-unit {
-            color: #999;
-            font-size: 13px;
-            margin-top: 4px;
-        }
-
-        .button-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 22px;
-        }
-
-        button {
-            padding: 11px 16px;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Noto Sans KR', sans-serif;
-        }
-
-        .btn-calculate {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            grid-column: 1 / -1;
-        }
-
-        .btn-calculate:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-secondary {
-            background: #f5f5f5;
-            color: #333;
-            border: 2px solid #e0e0e0;
-        }
-
-        .btn-secondary:hover {
-            background: #efefef;
-            border-color: #ccc;
-        }
-
-        .result-section {
-            background: #f9f9f9;
-            border-left: 4px solid #667eea;
-            padding: 18px 16px;
-            border-radius: 8px;
-            margin-bottom: 22px;
-            display: none;
-        }
-
-        .result-section.show {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #e0e0e0;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .result-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .result-label {
-            font-size: 14px;
-            color: #666;
-            font-weight: 500;
-        }
-
-        .result-value {
-            font-size: 17px;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .result-value.highlight {
-            color: #667eea;
-            font-size: 22px;
-        }
-
-        .result-item.formula {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        #resultFormula {
-            font-size: 14px;
-            color: #666;
-            width: 100%;
-            margin-top: 4px;
-            text-align: right;
-            word-break: keep-all;
-        }
-
         .tax-table {
             width: 100%;
             border-collapse: collapse;
@@ -851,199 +187,37 @@
             border-radius: 8px;
             overflow: hidden;
         }
-
-        .tax-table thead {
-            background: #667eea;
-            color: white;
-        }
-
+        .tax-table thead { background: #667eea; color: white; }
         .tax-table th {
             padding: 10px;
             text-align: center;
             font-weight: 600;
         }
-
         .tax-table td {
             padding: 10px;
             text-align: right;
             border-bottom: 1px solid #e0e0e0;
         }
-
         .tax-table td:first-child {
             text-align: left;
             background: #f9f9f9;
             font-weight: 500;
         }
+        .tax-table tbody tr:last-child td { border-bottom: none; }
 
-        .tax-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 16px;
-            padding: 24px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 10px;
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #999;
-            cursor: pointer;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .close-btn:hover {
-            color: #333;
-        }
-
-        .contact-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 18px 16px 14px;
-            border-radius: 8px;
-            text-align: center;
-            margin-top: 18px;
-        }
-
-        .contact-section-title {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .contact-section-title span {
-            font-weight: 400;
-            font-size: 14px;
-            margin-left: 6px;
-        }
-
-        .contact-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: stretch;
-        }
-
-        .contact-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            padding: 10px 14px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            box-sizing: border-box;
-            border: none;
-            cursor: pointer;
-        }
-
-        .contact-button.phone,
-        .contact-button.kakao-channel {
-            background: #ffffff;
-            color: #667eea;
-        }
-
-        .contact-button.save-image {
-            background: #fee500;
-            color: #222222;
-        }
-
-        .contact-button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
-        }
-
-        .contact-button:active {
-            transform: translateY(0);
-            box-shadow: none;
-        }
-
-        .kakao-icon {
-            width: 18px;
-            height: 18px;
-            object-fit: contain;
-            margin-right: 6px;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 24px 18px 20px;
-            }
-
-            .title {
-                font-size: 22px;
-            }
-
-            .logo {
-                width: 120px;
-                height: 54px;
-            }
-
-            input[type="text"] {
-                font-size: 16px;
-            }
-
-            .button-group {
-                grid-template-columns: 1fr;
-            }
-
-            .result-value.highlight {
-                font-size: 20px;
-            }
+@media (max-width:600px) {
+            .container { padding:24px 18px 20px; }
+            .title { font-size:22px; }
+            .logo { width:132px; height:62px; }
         }
     </style>
 </head>
 <body>
-    <div class="container" id="captureArea">
+    <div class="container">
         <div class="header">
             <div class="title">소득세 계산기</div>
             <div class="logo">
-                <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/bf23e697-120a-41ad-908d-b0ce506c2342" alt="IAN Consulting Group Logo">
+                <img src="data:image/jpeg;base64,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" alt="이안 로고">
             </div>
         </div>
 
@@ -1053,7 +227,6 @@
                 <input type="text" id="taxableIncome" placeholder="금액을 입력해주세요" inputmode="numeric">
                 <div class="input-unit">* 원(₩) 단위로 입력해주세요</div>
             </div>
-
             <div class="button-group">
                 <button type="button" class="btn-calculate" id="calculateBtn">계산하기</button>
                 <button type="button" class="btn-secondary" id="tableBtn">현재 소득세율표 보기</button>
@@ -1061,117 +234,20 @@
         </form>
 
         <div class="result-section" id="resultSection">
-            <div class="result-item">
-                <span class="result-label">과세표준</span>
-                <span class="result-value" id="resultIncome">0원</span>
-            </div>
-            <div class="result-item">
-                <span class="result-label">적용세율</span>
-                <span class="result-value" id="resultRate">0%</span>
-            </div>
-            <div class="result-item formula">
-                <span class="result-label" style="font-size: 13px; color: #999;">계산식</span>
-                <span class="result-value" id="resultFormula">0원</span>
-            </div>
-            <div class="result-item">
-                <span class="result-label">종합소득세</span>
-                <span class="result-value highlight" id="resultTax">0원</span>
-            </div>
+            <div class="result-item"><span class="result-label">과세표준</span><span class="result-value" id="resultIncome">0원</span></div>
+            <div class="result-item"><span class="result-label">적용세율</span><span class="result-value" id="resultRate">0%</span></div>
+            <div class="result-item formula"><span class="result-label" style="font-size:13px;color:#999;">계산식</span><span class="result-value" id="resultFormula">0원</span></div>
+            <div class="result-item"><span class="result-label">종합소득세</span><span class="result-value highlight" id="resultTax">0원</span></div>
         </div>
 
         <div class="contact-section">
-            <div class="contact-section-title">
-                문의하기 <span>| 서진우세무사</span>
-            </div>
-
+            <div class="contact-section-title">문의하기 <span>| 서진우세무사</span></div>
             <div class="contact-buttons">
-                <a href="tel:02-715-3535" class="contact-button phone">
-                    📞 02-715-3535
-                </a>
-
+                <a href="tel:02-715-3535" class="contact-button phone">📞 02-715-3535</a>
                 <a href="https://pf.kakao.com/_JxjCrxb" target="_blank" rel="noopener noreferrer" class="contact-button kakao-channel">
-                    <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/103888f8-094f-4752-91dc-99e6407f4cd7"
-                         alt="카카오톡 채널" class="kakao-icon">
-                    이안세무회계컨설팅
+                    <img src="data:image/jpeg;base64,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" alt="카카오톡 채널" class="kakao-icon">이안세무회계컨설팅
                 </a>
-
-                <button type="button" class="contact-button save-image" id="saveImageBtn">
-                    📷 사진으로 저장하기
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="taxModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">2026년 종합소득세율표</div>
-                <button class="close-btn" id="closeBtn">&times;</button>
-            </div>
-            <table class="tax-table">
-                <thead>
-                    <tr>
-                        <th>구간</th>
-                        <th>과세표준</th>
-                        <th>세율</th>
-                        <th>누진공제액</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1단계</td>
-                        <td>0 ~ 1,400만원</td>
-                        <td>6%</td>
-                        <td>0원</td>
-                    </tr>
-                    <tr>
-                        <td>2단계</td>
-                        <td>1,400만원 ~ 5,000만원</td>
-                        <td>15%</td>
-                        <td>126만원</td>
-                    </tr>
-                    <tr>
-                        <td>3단계</td>
-                        <td>5,000만원 ~ 8,800만원</td>
-                        <td>24%</td>
-                        <td>576만원</td>
-                    </tr>
-                    <tr>
-                        <td>4단계</td>
-                        <td>8,800만원 ~ 1.5억원</td>
-                        <td>35%</td>
-                        <td>1,544만원</td>
-                    </tr>
-                    <tr>
-                        <td>5단계</td>
-                        <td>1.5억원 ~ 3억원</td>
-                        <td>38%</td>
-                        <td>1,994만원</td>
-                    </tr>
-                    <tr>
-                        <td>6단계</td>
-                        <td>3억원 ~ 5억원</td>
-                        <td>40%</td>
-                        <td>2,594만원</td>
-                    </tr>
-                    <tr>
-                        <td>7단계</td>
-                        <td>5억원 ~ 10억원</td>
-                        <td>42%</td>
-                        <td>3,594만원</td>
-                    </tr>
-                    <tr>
-                        <td>8단계</td>
-                        <td>10억원 초과</td>
-                        <td>45%</td>
-                        <td>6,594만원</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div style="font-size: 12px; color: #333; margin-top: 14px; line-height: 1.6;">
-                ※ 이 세율표는 2026년 기준입니다.<br>
-                ※ 실제 세액은 공제항목, 감면액 등에 따라 달라질 수 있습니다.<br>
-                ※ 정확한 세금 계산을 위해 세무사와 상담하시기 바랍니다.
+                <button type="button" class="contact-button save-image" id="saveImageBtn">📷 사진으로 저장하기</button>
             </div>
         </div>
     </div>
@@ -1192,237 +268,150 @@
         const calculateBtn = document.getElementById('calculateBtn');
         const tableBtn = document.getElementById('tableBtn');
         const resultSection = document.getElementById('resultSection');
-        const modal = document.getElementById('taxModal');
-        const closeBtn = document.getElementById('closeBtn');
         const saveImageBtn = document.getElementById('saveImageBtn');
 
         function formatCurrency(num) {
-            return new Intl.NumberFormat('ko-KR', {
-                style: 'currency',
-                currency: 'KRW',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(num);
+            return new Intl.NumberFormat('ko-KR', { style:'currency', currency:'KRW', minimumFractionDigits:0, maximumFractionDigits:0 }).format(num);
         }
 
         function calculateTax(income) {
-            if (income <= 0) {
-                return null;
-            }
-
-            for (let bracket of taxBrackets) {
-                if (income > bracket.min && income <= bracket.max) {
-                    const taxRaw = income * bracket.rate - bracket.deduction;
-                    const tax = Math.max(0, Math.floor(taxRaw));
-                    const ratePercent = bracket.rate * 100;
-                    const formula = `${formatCurrency(income)} × ${ratePercent.toFixed(0)}% - ${formatCurrency(bracket.deduction)}`;
-                    return {
-                        tax,
-                        rate: ratePercent,
-                        formula
-                    };
+            if (income <= 0) return null;
+            for (const b of taxBrackets) {
+                if (income > b.min && income <= b.max) {
+                    const tax = Math.max(0, Math.floor(income * b.rate - b.deduction));
+                    return { tax, rate: b.rate * 100, formula: `${formatCurrency(income)} × ${(b.rate*100).toFixed(0)}% - ${formatCurrency(b.deduction)}` };
                 }
             }
             return null;
         }
 
         function performCalculation() {
-            const raw = incomeInput.value.replace(/,/g, '');
-            const income = parseInt(raw, 10);
-
+            const income = parseInt((incomeInput.value || '').replace(/,/g,''), 10);
             if (!income || income <= 0) {
                 alert('과세표준 금액을 0보다 큰 숫자로 입력해주세요.');
                 incomeInput.focus();
                 return;
             }
-
-            const result = calculateTax(income);
-            if (!result) {
-                alert('세액 계산 중 오류가 발생했습니다.');
-                return;
-            }
-
+            const r = calculateTax(income);
+            if (!r) { alert('세액 계산 중 오류가 발생했습니다.'); return; }
             document.getElementById('resultIncome').textContent = formatCurrency(income);
-            document.getElementById('resultRate').textContent = result.rate.toFixed(0) + '%';
-            document.getElementById('resultFormula').textContent = result.formula;
-            document.getElementById('resultTax').textContent = formatCurrency(result.tax);
-
+            document.getElementById('resultRate').textContent = r.rate.toFixed(0) + '%';
+            document.getElementById('resultFormula').textContent = r.formula;
+            document.getElementById('resultTax').textContent = formatCurrency(r.tax);
             resultSection.classList.add('show');
         }
 
-        calculateBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            performCalculation();
+        calculateBtn.addEventListener('click', e => { e.preventDefault(); performCalculation(); });
+        incomeInput.addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); performCalculation(); } });
+        incomeInput.addEventListener('input', function() {
+            let v = this.value.replace(/[^0-9]/g,'');
+            this.value = v ? parseInt(v,10).toLocaleString('ko-KR') : '';
         });
 
-        tableBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            modal.classList.add('show');
-        });
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `<div class="modal-content"><div class="modal-header"><div class="modal-title">2026년 종합소득세율표</div><button class="close-btn" id="closeBtn">&times;</button></div>
+<table class="tax-table"><thead><tr><th>구간</th><th>과세표준</th><th>세율</th><th>누진공제액</th></tr></thead><tbody>
+<tr><td>1단계</td><td>0 ~ 1,400만원</td><td>6%</td><td>0원</td></tr>
+<tr><td>2단계</td><td>1,400만원 ~ 5,000만원</td><td>15%</td><td>126만원</td></tr>
+<tr><td>3단계</td><td>5,000만원 ~ 8,800만원</td><td>24%</td><td>576만원</td></tr>
+<tr><td>4단계</td><td>8,800만원 ~ 1.5억원</td><td>35%</td><td>1,544만원</td></tr>
+<tr><td>5단계</td><td>1.5억원 ~ 3억원</td><td>38%</td><td>1,994만원</td></tr>
+<tr><td>6단계</td><td>3억원 ~ 5억원</td><td>40%</td><td>2,594만원</td></tr>
+<tr><td>7단계</td><td>5억원 ~ 10억원</td><td>42%</td><td>3,594만원</td></tr>
+<tr><td>8단계</td><td>10억원 초과</td><td>45%</td><td>6,594만원</td></tr>
+</tbody></table>
+<div style="font-size:12px;color:#333;margin-top:14px;line-height:1.6;">※ 이 세율표는 2026년 기준입니다.<br>※ 실제 세액은 공제항목, 감면액 등에 따라 달라질 수 있습니다.<br>※ 정확한 세금 계산을 위해 세무사와 상담하시기 바랍니다.</div></div>`;
+        document.body.appendChild(modal);
+        const closeBtn = modal.querySelector('#closeBtn');
 
-        closeBtn.addEventListener('click', function () {
-            modal.classList.remove('show');
-        });
+        tableBtn.addEventListener('click', e => { e.preventDefault(); modal.classList.add('show'); });
+        closeBtn.addEventListener('click', () => modal.classList.remove('show'));
+        modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('show'); });
 
-        modal.addEventListener('click', function (e) {
-            if (e.target === modal) {
-                modal.classList.remove('show');
+        function wrapText(ctx, text, maxWidth) {
+            const words = text.split(' ');
+            const lines = [];
+            let line = '';
+            for (const w of words) {
+                const test = line ? line + ' ' + w : w;
+                if (ctx.measureText(test).width > maxWidth && line) {
+                    lines.push(line);
+                    line = w;
+                } else { line = test; }
             }
-        });
+            if (line) lines.push(line);
+            return lines;
+        }
 
-        incomeInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                performCalculation();
-            }
-        });
-
-        incomeInput.addEventListener('input', function () {
-            let value = this.value.replace(/[^0-9]/g, '');
-            if (value) {
-                this.value = parseInt(value, 10).toLocaleString('ko-KR');
-            } else {
-                this.value = '';
-            }
-        });
+        function drawRoundedRect(ctx,x,y,w,h,r) {
+            ctx.beginPath();
+            ctx.moveTo(x+r,y);
+            ctx.arcTo(x+w,y,x+w,y+h,r);
+            ctx.arcTo(x+w,y+h,x,y+h,r);
+            ctx.arcTo(x,y+h,x,y,r);
+            ctx.arcTo(x,y,x+w,y,r);
+            ctx.closePath();
+        }
 
         function saveResultAsImage() {
             if (!resultSection.classList.contains('show')) {
                 alert('먼저 소득세를 계산한 다음 사진으로 저장할 수 있습니다.');
                 return;
             }
-
             const incomeText = document.getElementById('resultIncome').textContent;
             const rateText = document.getElementById('resultRate').textContent;
             const formulaText = document.getElementById('resultFormula').textContent;
             const taxText = document.getElementById('resultTax').textContent;
 
             const canvas = document.createElement('canvas');
-            const width = 800;
-            const height = 600;
-            canvas.width = width;
-            canvas.height = height;
+            const width = 800, height = 600;
+            canvas.width = width; canvas.height = height;
             const ctx = canvas.getContext('2d');
 
-            const gradient = ctx.createLinearGradient(0, 0, width, height);
-            gradient.addColorStop(0, '#667eea');
-            gradient.addColorStop(1, '#764ba2');
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, width, height);
+            const grad = ctx.createLinearGradient(0,0,width,height);
+            grad.addColorStop(0,'#667eea'); grad.addColorStop(1,'#764ba2');
+            ctx.fillStyle = grad; ctx.fillRect(0,0,width,height);
 
-            const cardX = 60;
-            const cardY = 80;
-            const cardW = width - 120;
-            const cardH = height - 160;
+            const cardX=60, cardY=80, cardW=width-120, cardH=height-160;
             ctx.fillStyle = '#ffffff';
-            ctx.roundRect(cardX, cardY, cardW, cardH, 20);
+            drawRoundedRect(ctx,cardX,cardY,cardW,cardH,20);
             ctx.fill();
 
-            ctx.fillStyle = '#333333';
-            ctx.font = 'bold 28px "Noto Sans KR", sans-serif';
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 28px sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('소득세 계산 결과', width / 2, cardY + 50);
+            ctx.fillText('소득세 계산 결과', width/2, cardY+50);
 
-            ctx.textAlign = 'left';
-            ctx.font = '16px "Noto Sans KR", sans-serif';
+            let x = cardX+40, y = cardY+110, gap = 42;
+            ctx.textAlign='left';
+            ctx.font='16px sans-serif'; ctx.fillStyle='#666'; ctx.fillText('과세표준',x,y);
+            ctx.font='bold 20px sans-serif'; ctx.fillStyle='#333'; ctx.fillText(incomeText,x+140,y);
+            y+=gap; ctx.font='16px sans-serif'; ctx.fillStyle='#666'; ctx.fillText('적용세율',x,y);
+            ctx.font='bold 20px sans-serif'; ctx.fillStyle='#333'; ctx.fillText(rateText,x+140,y);
+            y+=gap; ctx.font='16px sans-serif'; ctx.fillStyle='#999'; ctx.fillText('계산식',x,y);
+            ctx.font='15px sans-serif'; ctx.fillStyle='#555';
+            const lines = wrapText(ctx, formulaText, cardW-220);
+            lines.forEach((line,i)=> ctx.fillText(line,x+140,y+(i+1)*22));
 
-            let textX = cardX + 40;
-            let textY = cardY + 110;
-            const lineGap = 40;
+            const taxY = cardY+cardH-90;
+            ctx.font='16px sans-serif'; ctx.fillStyle='#666'; ctx.fillText('종합소득세',x,taxY);
+            ctx.font='bold 26px sans-serif'; ctx.fillStyle='#667eea'; ctx.fillText(taxText,x+140,taxY);
 
-            ctx.fillStyle = '#666666';
-            ctx.fillText('과세표준', textX, textY);
-            ctx.fillStyle = '#333333';
-            ctx.font = 'bold 20px "Noto Sans KR", sans-serif';
-            ctx.fillText(incomeText, textX + 140, textY);
+            ctx.font='12px sans-serif'; ctx.fillStyle='#888'; ctx.textAlign='center';
+            ctx.fillText('※ 실제 세액은 공제·감면 등 상황에 따라 달라질 수 있습니다.', width/2, cardY+cardH-30);
 
-            ctx.font = '16px "Noto Sans KR", sans-serif';
-            textY += lineGap;
-            ctx.fillStyle = '#666666';
-            ctx.fillText('적용세율', textX, textY);
-            ctx.fillStyle = '#333333';
-            ctx.font = 'bold 20px "Noto Sans KR", sans-serif';
-            ctx.fillText(rateText, textX + 140, textY);
-
-            textY += lineGap;
-            ctx.font = '16px "Noto Sans KR", sans-serif';
-            ctx.fillStyle = '#999999';
-            ctx.fillText('계산식', textX, textY);
-
-            ctx.fillStyle = '#555555';
-            ctx.font = '15px "Noto Sans KR", sans-serif';
-            const formulaMaxWidth = cardW - 80;
-            const formulaLines = wrapText(ctx, formulaText, formulaMaxWidth);
-            let formulaY = textY - 4;
-            formulaLines.forEach((line, idx) => {
-                ctx.fillText(line, textX + 140, formulaY + (idx + 1) * 22);
-            });
-
-            ctx.font = '16px "Noto Sans KR", sans-serif';
-            ctx.fillStyle = '#666666';
-            const taxLabelY = cardY + cardH - 90;
-            ctx.fillText('종합소득세', textX, taxLabelY);
-            ctx.font = 'bold 26px "Noto Sans KR", sans-serif';
-            ctx.fillStyle = '#667eea';
-            ctx.fillText(taxText, textX + 140, taxLabelY);
-
-            ctx.font = '12px "Noto Sans KR", sans-serif';
-            ctx.fillStyle = '#888888';
-            ctx.textAlign = 'center';
-            ctx.fillText('※ 실제 세액은 공제·감면 등 상황에 따라 달라질 수 있습니다.', width / 2, cardY + cardH - 30);
-
-            const dataUrl = canvas.toDataURL('image/png');
+            const url = canvas.toDataURL('image/png');
             const win = window.open('', '_blank');
             if (win) {
-                win.document.write('<html><head><title>소득세 계산 결과</title></head><body style="margin:0;">');
-                win.document.write('<img src="' + dataUrl + '" style="width:100%;height:auto;display:block;" />');
-                win.document.write('</body></html>');
+                win.document.write('<html><head><title>소득세 계산 결과</title><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body style="margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;"><img src="'+url+'" style="max-width:100%;height:auto;display:block;" alt="소득세 계산 결과 이미지"></body></html>');
                 win.document.close();
             } else {
-                const link = document.createElement('a');
-                link.href = dataUrl;
-                link.target = '_blank';
-                link.click();
+                alert('팝업이 차단되어 있습니다. 브라우저에서 팝업을 허용하고 다시 시도해주세요.');
             }
         }
 
-        function wrapText(ctx, text, maxWidth) {
-            const words = text.split(' ');
-            const lines = [];
-            let currentLine = '';
-
-            for (let i = 0; i < words.length; i++) {
-                const testLine = currentLine ? currentLine + ' ' + words[i] : words[i];
-                const metrics = ctx.measureText(testLine);
-                if (metrics.width > maxWidth && currentLine) {
-                    lines.push(currentLine);
-                    currentLine = words[i];
-                } else {
-                    currentLine = testLine;
-                }
-            }
-            if (currentLine) lines.push(currentLine);
-            return lines;
-        }
-
-        if (!CanvasRenderingContext2D.prototype.roundRect) {
-            CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
-                const minSize = Math.min(w, h);
-                if (r > minSize / 2) r = minSize / 2;
-                this.beginPath();
-                this.moveTo(x + r, y);
-                this.arcTo(x + w, y, x + w, y + h, r);
-                this.arcTo(x + w, y + h, x, y + h, r);
-                this.arcTo(x, y + h, x, y, r);
-                this.arcTo(x, y, x + w, y, r);
-                this.closePath();
-                return this;
-            };
-        }
-
-        saveImageBtn.addEventListener('click', function () {
-            saveResultAsImage();
-        });
+        saveImageBtn.addEventListener('click', saveResultAsImage);
     </script>
 </body>
 </html>
