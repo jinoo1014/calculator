@@ -3,15 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>소득세 계산기 v26</title>
+<title>소득세 계산기 v27</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Noto Sans KR',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px;display:flex;justify-content:center;align-items:center}
 .container{background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);max-width:600px;width:100%;padding:32px 24px 18px}
 .header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px;border-bottom:2px solid #f0f0f0;padding-bottom:16px}
-.title{font-size:26px;font-weight:700;color:#333;flex:1;white-space:nowrap}
+.title{font-size:26px;font-weight:700;color:#333;flex:1;white-space:nowrap;display:flex;align-items:center;gap:10px}
 .logo{width:146px;height:70px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .logo img{width:100%;height:100%;object-fit:contain;display:block}
+.inline-logo{width:96px;height:44px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle}
+.inline-logo img{width:100%;height:100%;object-fit:contain;display:block}
 .form-group{margin-bottom:22px}
 label{display:block;margin-bottom:8px;font-size:20px;font-weight:600;color:#555}
 input[type="text"]{width:100%;padding:14px 16px;border:2px solid #e0e0e0;border-radius:8px;font-size:18px;transition:all .3s ease;font-family:'Noto Sans KR',sans-serif}
@@ -26,8 +28,8 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
 .result-section.show{display:block;animation:slideIn .3s ease}
 @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 .result-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
-.result-title{font-weight:700;color:#333;font-size:18px;white-space:nowrap}
-.result-logo{width:110px;height:48px;flex-shrink:0}
+.result-title{font-weight:700;color:#333;font-size:18px;white-space:nowrap;display:flex;align-items:center;gap:10px}
+.result-logo{width:96px;height:44px;flex-shrink:0}
 .result-logo img{width:100%;height:100%;object-fit:contain;display:block}
 .result-item{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #e0e0e0;flex-wrap:wrap;gap:8px}
 .result-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
@@ -50,8 +52,8 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
 .tax-table td:first-child{text-align:left;background:#f9f9f9;font-weight:500;white-space:nowrap}
 .tax-table tbody tr:last-child td{border-bottom:none}
 .contact-section{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:18px 16px 14px;border-radius:8px;text-align:center;margin-top:18px}
-.contact-section-title{font-size:15px;font-weight:600;margin-bottom:10px;white-space:nowrap}
-.contact-section-title span{font-weight:400;font-size:14px;margin-left:6px}
+.contact-section-title{font-size:15px;font-weight:600;margin-bottom:10px;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:8px}
+.contact-section-title span{font-weight:400;font-size:14px}
 .contact-buttons{display:flex;flex-direction:column;gap:8px;align-items:stretch}
 .contact-button{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:46px;padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;box-sizing:border-box;border:none;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.08);white-space:nowrap}
 .contact-button.phone,.contact-button.save-image{background:#fff;color:#667eea}
@@ -62,9 +64,10 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
 .container{padding:24px 18px 20px}
 .title{font-size:22px}
 .logo{width:132px;height:62px}
+.inline-logo{width:80px;height:36px}
 .button-group{grid-template-columns:1fr}
 .btn-secondary{min-width:100%}
-.result-logo{width:92px;height:40px}
+.result-logo{width:84px;height:36px}
 .result-title{font-size:16px}
 .modal-content{padding:18px}
 .tax-table{font-size:11px;table-layout:fixed;width:100%}
@@ -79,7 +82,7 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
 <body>
 <div class="container">
   <div class="header">
-    <div class="title">소득세 계산기</div>
+    <div class="title">소득세 계산기 <span class="inline-logo"><img src="data:image/jpeg;base64,REPLACE_LOGO" alt="이안 로고"></span></div>
     <div class="logo"><img src="data:image/jpeg;base64,REPLACE_LOGO" alt="이안 로고"></div>
   </div>
   <form id="taxForm">
@@ -94,34 +97,55 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
     </div>
   </form>
   <div class="result-section" id="resultSection">
-    <div class="result-header"><div class="result-title">소득세 계산 결과</div><div class="result-logo"><img src="data:image/jpeg;base64,REPLACE_LOGO" alt="이안 로고"></div></div>
+    <div class="result-header"><div class="result-title">소득세 계산 결과 <span class="inline-logo"><img src="data:image/jpeg;base64,REPLACE_LOGO" alt="이안 로고"></span></div><div class="result-logo"><img src="data:image/jpeg;base64,REPLACE_LOGO" alt="이안 로고"></div></div>
     <div class="result-item"><span class="result-label">과세표준</span><span class="result-value" id="resultIncome">0원</span></div>
     <div class="result-item"><span class="result-label">적용세율</span><span class="result-value" id="resultRate">0%</span></div>
     <div class="result-item formula"><span class="result-label" style="font-size:13px;color:#999;">계산식</span><span class="result-value" id="resultFormula">0원</span></div>
     <div class="result-item"><span class="result-label">종합소득세</span><span class="result-value highlight" id="resultTax">0원</span></div>
   </div>
   <div class="contact-section">
-    <div class="contact-section-title">문의하기 <span>| 서진우세무사</span></div>
+    <div class="contact-section-title"><span class="kakao-inline"><img src="data:image/jpeg;base64,REPLACE_CHAN" alt="카카오톡 채널" class="kakao-icon"></span><span>이안세무회계컨설팅</span><span>| 서진우세무사</span></div>
     <div class="contact-buttons">
       <a href="tel:010-6209-4967" class="contact-button phone">📞 010-6209-4967</a>
       <a href="https://pf.kakao.com/_JxjCrxb" target="_blank" rel="noopener noreferrer" class="contact-button kakao-channel"><img src="data:image/jpeg;base64,REPLACE_CHAN" alt="카카오톡 채널" class="kakao-icon">이안세무회계컨설팅</a>
       <button type="button" class="contact-button save-image" id="saveImageBtn">📷 사진으로 저장하기</button>
     </div>
   </div>
-  <div class="version">소득세 계산기 v26</div>
+  <div class="version">소득세 계산기 v27</div>
 </div>
-<div class="modal" id="taxModal"><div class="modal-content"><div class="modal-header"><div class="modal-title">2026년 종합소득세율표</div><button class="close-btn" id="closeBtn">&times;</button></div>
-<table class="tax-table"><thead><tr><th>구간</th><th>과세표준</th><th>세율</th><th>누진공제액</th></tr></thead><tbody>
-<tr><td>1단계</td><td>0 ~ 1,400만원</td><td>6%</td><td>0원</td></tr>
-<tr><td>2단계</td><td>1,400만원 ~ 5,000만원</td><td>15%</td><td>126만원</td></tr>
-<tr><td>3단계</td><td>5,000만원 ~ 8,800만원</td><td>24%</td><td>576만원</td></tr>
-<tr><td>4단계</td><td>8,800만원 ~ 1.5억원</td><td>35%</td><td>1,544만원</td></tr>
-<tr><td>5단계</td><td>1.5억원 ~ 3억원</td><td>38%</td><td>1,994만원</td></tr>
-<tr><td>6단계</td><td>3억원 ~ 5억원</td><td>40%</td><td>2,594만원</td></tr>
-<tr><td>7단계</td><td>5억원 ~ 10억원</td><td>42%</td><td>3,594만원</td></tr>
-<tr><td>8단계</td><td>10억원 초과</td><td>45%</td><td>6,594만원</td></tr>
-</tbody></table>
-<div style="font-size:12px;color:#333;margin-top:14px;line-height:1.6;">※ 이 세율표는 2026년 기준입니다.<br>※ 실제 세액은 공제항목, 감면액 등에 따라 달라질 수 있습니다.<br>※ 정확한 세금 계산을 위해 세무사와 상담하시기 바랍니다.</div></div></div>
+<div class="modal" id="taxModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">2026년 종합소득세율표</div>
+      <button class="close-btn" id="closeBtn">&times;</button>
+    </div>
+    <table class="tax-table">
+      <thead>
+        <tr>
+          <th>구간</th>
+          <th>과세표준</th>
+          <th>세율</th>
+          <th>누진공제액</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1단계</td><td>0 ~ 1,400만원</td><td>6%</td><td>0원</td></tr>
+        <tr><td>2단계</td><td>1,400만원 ~ 5,000만원</td><td>15%</td><td>126만원</td></tr>
+        <tr><td>3단계</td><td>5,000만원 ~ 8,800만원</td><td>24%</td><td>576만원</td></tr>
+        <tr><td>4단계</td><td>8,800만원 ~ 1.5억원</td><td>35%</td><td>1,544만원</td></tr>
+        <tr><td>5단계</td><td>1.5억원 ~ 3억원</td><td>38%</td><td>1,994만원</td></tr>
+        <tr><td>6단계</td><td>3억원 ~ 5억원</td><td>40%</td><td>2,594만원</td></tr>
+        <tr><td>7단계</td><td>5억원 ~ 10억원</td><td>42%</td><td>3,594만원</td></tr>
+        <tr><td>8단계</td><td>10억원 초과</td><td>45%</td><td>6,594만원</td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:12px;color:#333;margin-top:14px;line-height:1.6;">
+      ※ 이 세율표는 2026년 기준입니다.<br>
+      ※ 실제 세액은 공제항목, 감면액 등에 따라 달라질 수 있습니다.<br>
+      ※ 정확한 세금 계산을 위해 세무사와 상담하시기 바랍니다.
+    </div>
+  </div>
+</div>
 <script>
 const taxBrackets=[{min:0,max:14000000,rate:0.06,deduction:0},{min:14000000,max:50000000,rate:0.15,deduction:1260000},{min:50000000,max:88000000,rate:0.24,deduction:5760000},{min:88000000,max:150000000,rate:0.35,deduction:15440000},{min:150000000,max:300000000,rate:0.38,deduction:19940000},{min:300000000,max:500000000,rate:0.40,deduction:25940000},{min:500000000,max:1000000000,rate:0.42,deduction:35940000},{min:1000000000,max:Infinity,rate:0.45,deduction:65940000}];
 const incomeInput=document.getElementById('taxableIncome'),calculateBtn=document.getElementById('calculateBtn'),tableBtn=document.getElementById('tableBtn'),resultSection=document.getElementById('resultSection'),saveImageBtn=document.getElementById('saveImageBtn'),modal=document.getElementById('taxModal'),closeBtn=document.getElementById('closeBtn');
@@ -150,7 +174,7 @@ wrapText(ctx,formulaText,cardW-220).forEach((line,i)=>ctx.fillText(line,x+140,y+
 const taxY=cardY+cardH-90;ctx.font='16px sans-serif';ctx.fillStyle='#666';ctx.fillText('종합소득세',x,taxY);ctx.font='bold 26px sans-serif';ctx.fillStyle='#667eea';ctx.fillText(taxText,x+140,taxY);
 ctx.font='14px sans-serif';ctx.fillStyle='#777';ctx.textAlign='center';ctx.fillText('※ 실제 세액은 공제·감면 등 상황에 따라 달라질 수 있습니다.',width/2,cardY+cardH-30);
 const url=canvas.toDataURL('image/png');const win=window.open('','_blank');
-if(win){win.document.write('<html><head><title>소득세 계산 결과</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"></head><body style=\"margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;\"><img src=\"'+url+'\" style=\"max-width:100%;height:auto;display:block;\" alt=\"소득세 계산 결과 이미지\"></body></html>');win.document.close()}else{alert('팝업이 차단되어 있습니다. 브라우저에서 팝업을 허용하고 다시 시도해주세요.')}
+if(win){win.document.write('<html><head><title>소득세 계산 결과</title><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body style="margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;"><img src="'+url+'" style="max-width:100%;height:auto;display:block;" alt="소득세 계산 결과 이미지"></body></html>');win.document.close()}else{alert('팝업이 차단되어 있습니다. 브라우저에서 팝업을 허용하고 다시 시도해주세요.')}
 }
 saveImageBtn.addEventListener('click',saveResultAsImage);
 </script>
