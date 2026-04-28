@@ -3,17 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>소득세 계산기 v27</title>
+<title>소득세 계산기 v28</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Noto Sans KR',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px;display:flex;justify-content:center;align-items:center}
 .container{background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);max-width:600px;width:100%;padding:32px 24px 18px}
 .header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px;border-bottom:2px solid #f0f0f0;padding-bottom:16px}
-.title{font-size:26px;font-weight:700;color:#333;flex:1;white-space:nowrap;display:flex;align-items:center;gap:10px}
-.logo{width:146px;height:70px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.title{font-size:26px;font-weight:700;color:#333;flex:1;white-space:nowrap}
+.logo{width:130px;height:60px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .logo img{width:100%;height:100%;object-fit:contain;display:block}
-.inline-logo{width:96px;height:44px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle}
-.inline-logo img{width:100%;height:100%;object-fit:contain;display:block}
 .form-group{margin-bottom:22px}
 label{display:block;margin-bottom:8px;font-size:20px;font-weight:600;color:#555}
 input[type="text"]{width:100%;padding:14px 16px;border:2px solid #e0e0e0;border-radius:8px;font-size:18px;transition:all .3s ease;font-family:'Noto Sans KR',sans-serif}
@@ -28,8 +26,8 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
 .result-section.show{display:block;animation:slideIn .3s ease}
 @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 .result-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
-.result-title{font-weight:700;color:#333;font-size:18px;white-space:nowrap;display:flex;align-items:center;gap:10px}
-.result-logo{width:96px;height:44px;flex-shrink:0}
+.result-title{font-weight:700;color:#333;font-size:18px;white-space:nowrap}
+.result-logo{width:110px;height:48px;flex-shrink:0}
 .result-logo img{width:100%;height:100%;object-fit:contain;display:block}
 .result-item{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #e0e0e0;flex-wrap:wrap;gap:8px}
 .result-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
@@ -63,11 +61,10 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
 @media (max-width:600px){
 .container{padding:24px 18px 20px}
 .title{font-size:22px}
-.logo{width:132px;height:62px}
-.inline-logo{width:80px;height:36px}
+.logo{width:124px;height:58px}
 .button-group{grid-template-columns:1fr}
 .btn-secondary{min-width:100%}
-.result-logo{width:84px;height:36px}
+.result-logo{width:92px;height:40px}
 .result-title{font-size:16px}
 .modal-content{padding:18px}
 .tax-table{font-size:11px;table-layout:fixed;width:100%}
@@ -82,7 +79,7 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
 <body>
 <div class="container">
   <div class="header">
-    <div class="title">소득세 계산기 <span class="inline-logo"><img src="data:image/jpeg;base64,REPLACE_LOGO" alt="이안 로고"></span></div>
+    <div class="title">소득세 계산기</div>
     <div class="logo"><img src="data:image/jpeg;base64,REPLACE_LOGO" alt="이안 로고"></div>
   </div>
   <form id="taxForm">
@@ -97,7 +94,7 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
     </div>
   </form>
   <div class="result-section" id="resultSection">
-    <div class="result-header"><div class="result-title">소득세 계산 결과 <span class="inline-logo"><img src="data:image/jpeg;base64,REPLACE_LOGO" alt="이안 로고"></span></div><div class="result-logo"><img src="data:image/jpeg;base64,REPLACE_LOGO" alt="이안 로고"></div></div>
+    <div class="result-header"><div class="result-title">소득세 계산 결과</div><div class="result-logo"><img src="data:image/jpeg;base64,REPLACE_LOGO" alt="이안 로고"></div></div>
     <div class="result-item"><span class="result-label">과세표준</span><span class="result-value" id="resultIncome">0원</span></div>
     <div class="result-item"><span class="result-label">적용세율</span><span class="result-value" id="resultRate">0%</span></div>
     <div class="result-item formula"><span class="result-label" style="font-size:13px;color:#999;">계산식</span><span class="result-value" id="resultFormula">0원</span></div>
@@ -111,7 +108,7 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
       <button type="button" class="contact-button save-image" id="saveImageBtn">📷 사진으로 저장하기</button>
     </div>
   </div>
-  <div class="version">소득세 계산기 v27</div>
+  <div class="version">소득세 계산기 v28</div>
 </div>
 <div class="modal" id="taxModal">
   <div class="modal-content">
@@ -160,7 +157,8 @@ closeBtn.addEventListener('click',()=>modal.classList.remove('show'));
 modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('show')});
 function wrapText(ctx,text,maxWidth){const words=text.split(' ');const lines=[];let line='';for(const w of words){const test=line?line+' '+w:w;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=w}else{line=test}}if(line)lines.push(line);return lines}
 function drawRoundedRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
-function saveResultAsImage(){if(!resultSection.classList.contains('show')){alert('먼저 소득세를 계산한 다음 사진으로 저장할 수 있습니다.');return}
+function saveResultAsImage(){
+if(!resultSection.classList.contains('show')){alert('먼저 소득세를 계산한 다음 사진으로 저장할 수 있습니다.');return}
 const incomeText=document.getElementById('resultIncome').textContent,rateText=document.getElementById('resultRate').textContent,formulaText=document.getElementById('resultFormula').textContent,taxText=document.getElementById('resultTax').textContent;
 const canvas=document.createElement('canvas');const width=800,height=600;canvas.width=width;canvas.height=height;const ctx=canvas.getContext('2d');
 const grad=ctx.createLinearGradient(0,0,width,height);grad.addColorStop(0,'#667eea');grad.addColorStop(1,'#764ba2');ctx.fillStyle=grad;ctx.fillRect(0,0,width,height);
@@ -174,7 +172,7 @@ wrapText(ctx,formulaText,cardW-220).forEach((line,i)=>ctx.fillText(line,x+140,y+
 const taxY=cardY+cardH-90;ctx.font='16px sans-serif';ctx.fillStyle='#666';ctx.fillText('종합소득세',x,taxY);ctx.font='bold 26px sans-serif';ctx.fillStyle='#667eea';ctx.fillText(taxText,x+140,taxY);
 ctx.font='14px sans-serif';ctx.fillStyle='#777';ctx.textAlign='center';ctx.fillText('※ 실제 세액은 공제·감면 등 상황에 따라 달라질 수 있습니다.',width/2,cardY+cardH-30);
 const url=canvas.toDataURL('image/png');const win=window.open('','_blank');
-if(win){win.document.write('<html><head><title>소득세 계산 결과</title><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body style="margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;"><img src="'+url+'" style="max-width:100%;height:auto;display:block;" alt="소득세 계산 결과 이미지"></body></html>');win.document.close()}else{alert('팝업이 차단되어 있습니다. 브라우저에서 팝업을 허용하고 다시 시도해주세요.')}
+if(win){win.document.write('<html><head><title>소득세 계산 결과</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"></head><body style=\"margin:0;background:#111;display:flex;align-items:center;justify-content:center;min-height:100vh;\"><img src=\"'+url+'\" style=\"max-width:100%;height:auto;display:block;\" alt=\"소득세 계산 결과 이미지\"></body></html>');win.document.close()}else{alert('팝업이 차단되어 있습니다. 브라우저에서 팝업을 허용하고 다시 시도해주세요.')}
 }
 saveImageBtn.addEventListener('click',saveResultAsImage);
 </script>
