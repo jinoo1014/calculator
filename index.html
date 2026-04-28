@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>소득세 계산기 v28</title>
+<title>소득세 계산기 v29</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Noto Sans KR',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px;display:flex;justify-content:center;align-items:center}
@@ -26,7 +26,7 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
 .result-section.show{display:block;animation:slideIn .3s ease}
 @keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 .result-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
-.result-title{font-weight:700;color:#333;font-size:18px;white-space:nowrap}
+.result-title{font-weight:700;color:#333;font-size:18px;white-space:nowrap;display:flex;align-items:center;gap:10px}
 .result-logo{width:110px;height:48px;flex-shrink:0}
 .result-logo img{width:100%;height:100%;object-fit:contain;display:block}
 .result-item{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #e0e0e0;flex-wrap:wrap;gap:8px}
@@ -101,14 +101,14 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
     <div class="result-item"><span class="result-label">종합소득세</span><span class="result-value highlight" id="resultTax">0원</span></div>
   </div>
   <div class="contact-section">
-    <div class="contact-section-title"><span class="kakao-inline"><img src="data:image/jpeg;base64,REPLACE_CHAN" alt="카카오톡 채널" class="kakao-icon"></span><span>이안세무회계컨설팅</span><span>| 서진우세무사</span></div>
+    <div class="contact-section-title">문의하기 | 서진우세무사</div>
     <div class="contact-buttons">
       <a href="tel:010-6209-4967" class="contact-button phone">📞 010-6209-4967</a>
       <a href="https://pf.kakao.com/_JxjCrxb" target="_blank" rel="noopener noreferrer" class="contact-button kakao-channel"><img src="data:image/jpeg;base64,REPLACE_CHAN" alt="카카오톡 채널" class="kakao-icon">이안세무회계컨설팅</a>
       <button type="button" class="contact-button save-image" id="saveImageBtn">📷 사진으로 저장하기</button>
     </div>
   </div>
-  <div class="version">소득세 계산기 v28</div>
+  <div class="version">소득세 계산기 v29</div>
 </div>
 <div class="modal" id="taxModal">
   <div class="modal-content">
@@ -118,12 +118,7 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
     </div>
     <table class="tax-table">
       <thead>
-        <tr>
-          <th>구간</th>
-          <th>과세표준</th>
-          <th>세율</th>
-          <th>누진공제액</th>
-        </tr>
+        <tr><th>구간</th><th>과세표준</th><th>세율</th><th>누진공제액</th></tr>
       </thead>
       <tbody>
         <tr><td>1단계</td><td>0 ~ 1,400만원</td><td>6%</td><td>0원</td></tr>
@@ -136,11 +131,6 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
         <tr><td>8단계</td><td>10억원 초과</td><td>45%</td><td>6,594만원</td></tr>
       </tbody>
     </table>
-    <div style="font-size:12px;color:#333;margin-top:14px;line-height:1.6;">
-      ※ 이 세율표는 2026년 기준입니다.<br>
-      ※ 실제 세액은 공제항목, 감면액 등에 따라 달라질 수 있습니다.<br>
-      ※ 정확한 세금 계산을 위해 세무사와 상담하시기 바랍니다.
-    </div>
   </div>
 </div>
 <script>
@@ -157,8 +147,7 @@ closeBtn.addEventListener('click',()=>modal.classList.remove('show'));
 modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('show')});
 function wrapText(ctx,text,maxWidth){const words=text.split(' ');const lines=[];let line='';for(const w of words){const test=line?line+' '+w:w;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=w}else{line=test}}if(line)lines.push(line);return lines}
 function drawRoundedRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
-function saveResultAsImage(){
-if(!resultSection.classList.contains('show')){alert('먼저 소득세를 계산한 다음 사진으로 저장할 수 있습니다.');return}
+function saveResultAsImage(){if(!resultSection.classList.contains('show')){alert('먼저 소득세를 계산한 다음 사진으로 저장할 수 있습니다.');return}
 const incomeText=document.getElementById('resultIncome').textContent,rateText=document.getElementById('resultRate').textContent,formulaText=document.getElementById('resultFormula').textContent,taxText=document.getElementById('resultTax').textContent;
 const canvas=document.createElement('canvas');const width=800,height=600;canvas.width=width;canvas.height=height;const ctx=canvas.getContext('2d');
 const grad=ctx.createLinearGradient(0,0,width,height);grad.addColorStop(0,'#667eea');grad.addColorStop(1,'#764ba2');ctx.fillStyle=grad;ctx.fillRect(0,0,width,height);
