@@ -1,10 +1,9 @@
-ndex · HTML
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>소득세 계산기 v30</title>
+<title>소득세 계산기 v31</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Noto Sans KR',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px;display:flex;justify-content:center;align-items:center}
@@ -13,7 +12,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Noto Sans
 .title{font-size:26px;font-weight:700;color:#333;flex:1;white-space:nowrap}
 .logo{width:130px;height:60px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .logo img{width:100%;height:100%;object-fit:contain;display:block}
-.tab-group{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px;background:#f0f0f0;border-radius:10px;padding:5px}
+.tab-group{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:24px;background:#f0f0f0;border-radius:10px;padding:5px}
 .tab-btn{padding:11px 10px;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;background:transparent;color:#777;transition:all .25s ease;font-family:'Noto Sans KR',sans-serif;white-space:nowrap}
 .tab-btn.active{background:#fff;color:#667eea;box-shadow:0 2px 6px rgba(0,0,0,.1)}
 .tab-panel{display:none}
@@ -63,13 +62,19 @@ button{padding:11px 16px;border:none;border-radius:8px;font-size:15px;font-weigh
 .contact-button.kakao-channel{background:#fee500;color:#222}
 .kakao-icon{width:18px;height:18px;object-fit:contain;margin-right:6px;display:block}
 .version{margin-top:10px;font-size:12px;color:#999;text-align:right}
+.table-btn-group{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px}
+.table-btn-group .btn-secondary{font-size:13px;padding:11px 8px;white-space:normal;word-break:keep-all;line-height:1.3;min-height:46px}
+.ins-unit{font-size:12px;color:#999;text-align:right;margin:-6px 0 6px}
+.ins-table td:first-child{white-space:nowrap}
+.ins-total td{font-weight:700;color:#667eea;background:#f0f0ff!important}
+.ins-note{margin-top:12px;font-size:11px;color:#999;line-height:1.6}
 @media (max-width:600px){
 body{padding:14px;display:block}
 .container{padding:24px 18px 20px}
 .title{font-size:22px}
 .logo{width:124px;height:58px}
 .button-group{grid-template-columns:1fr}
-.tab-btn{font-size:14px;padding:10px 6px}
+.tab-btn{font-size:12px;padding:9px 3px;letter-spacing:-0.3px}
 .btn-secondary{min-width:100%}
 .result-logo{width:92px;height:40px}
 .result-title{font-size:16px}
@@ -80,6 +85,14 @@ body{padding:14px;display:block}
 .tax-table th:nth-child(2),.tax-table td:nth-child(2){width:38%}
 .tax-table th:nth-child(3),.tax-table td:nth-child(3){width:17%}
 .tax-table th:nth-child(4),.tax-table td:nth-child(4){width:27%}
+.table-btn-group{grid-template-columns:1fr 1fr}
+.table-btn-group .btn-secondary{min-width:0;font-size:12px;padding:10px 5px;line-height:1.25}
+.ins-table{table-layout:fixed;width:100%}
+.ins-table th:nth-child(1),.ins-table td:nth-child(1){width:22%}
+.ins-table th:nth-child(2),.ins-table td:nth-child(2){width:26%}
+.ins-table th:nth-child(3),.ins-table td:nth-child(3){width:26%}
+.ins-table th:nth-child(4),.ins-table td:nth-child(4){width:26%}
+.ins-table th,.ins-table td{padding:7px 2px;font-size:10.5px;overflow:hidden;text-overflow:clip}
 }
 </style>
 </head>
@@ -92,6 +105,7 @@ body{padding:14px;display:block}
   <div class="tab-group">
     <button type="button" class="tab-btn active" id="incomeTabBtn">소득세</button>
     <button type="button" class="tab-btn" id="religiousTabBtn">종교인소득세</button>
+    <button type="button" class="tab-btn" id="insuranceTabBtn">4대보험료</button>
   </div>
   <div class="tab-panel active" id="incomeTaxPanel">
   <form id="taxForm">
@@ -122,19 +136,55 @@ body{padding:14px;display:block}
     </div>
     <div class="button-group">
       <button type="button" class="btn-calculate" id="religiousCalculateBtn">계산하기</button>
-      <button type="button" class="btn-secondary" id="religiousTableBtn">필요경비율표 보기</button>
+    </div>
+    <div class="table-btn-group">
+      <button type="button" class="btn-secondary" id="religiousIncomeTableBtn">현재 소득세율표 보기</button>
+      <button type="button" class="btn-secondary" id="religiousTableBtn">종교인소득 필요경비표 보기</button>
     </div>
   </form>
   <div class="result-section" id="religiousResultSection">
     <div class="result-header"><div class="result-title">종교인소득세 계산 결과</div></div>
     <div class="result-item"><span class="result-label">종교인소득</span><span class="result-value" id="religiousResultIncome">0원</span></div>
     <div class="result-item formula"><span class="result-label" style="font-size:13px;color:#999;">필요경비</span><span class="result-value" id="religiousResultExpense">0원</span></div>
-    <div class="result-item"><span class="result-label">소득금액(과세표준)</span><span class="result-value" id="religiousResultBase">0원</span></div>
+    <div class="result-item"><span class="result-label">소득금액</span><span class="result-value" id="religiousResultBase">0원</span></div>
+    <div class="result-item"><span class="result-label">기본소득공제</span><span class="result-value" id="religiousResultBasicDeduction">-1,500,000원</span></div>
+    <div class="result-item"><span class="result-label">과세표준</span><span class="result-value" id="religiousResultTaxBase">0원</span></div>
     <div class="result-item"><span class="result-label">적용세율</span><span class="result-value" id="religiousResultRate">0%</span></div>
     <div class="result-item formula"><span class="result-label" style="font-size:13px;color:#999;">계산식</span><span class="result-value" id="religiousResultFormula">0원</span></div>
     <div class="result-item"><span class="result-label">산출세액</span><span class="result-value" id="religiousResultGross">0원</span></div>
-    <div class="result-item"><span class="result-label">기본공제</span><span class="result-value" id="religiousResultDeduction">-70,000원</span></div>
+    <div class="result-item"><span class="result-label">표준세액공제</span><span class="result-value" id="religiousResultDeduction">-70,000원</span></div>
     <div class="result-item"><span class="result-label">결정세액</span><span class="result-value highlight" id="religiousResultTax">0원</span></div>
+  </div>
+  </div>
+  <div class="tab-panel" id="insurancePanel">
+  <form id="insuranceForm">
+    <div class="form-group">
+      <label for="salaryInput">월 급여</label>
+      <input type="text" id="salaryInput" placeholder="금액을 입력해주세요" inputmode="numeric">
+      <div class="input-unit">* 원(₩) 단위로 입력해주세요 (세전 월 급여 기준)</div>
+    </div>
+    <div class="button-group">
+      <button type="button" class="btn-calculate" id="insuranceCalculateBtn">계산하기</button>
+      <button type="button" class="btn-secondary" id="insuranceTableBtn">4대보험율표 보기</button>
+    </div>
+  </form>
+  <div class="result-section" id="insuranceResultSection">
+    <div class="result-header"><div class="result-title">4대보험료 계산 결과</div></div>
+    <div class="result-item" style="border-bottom:none;padding-bottom:6px;margin-bottom:6px;"><span class="result-label">월 급여</span><span class="result-value" id="insResultSalary">0원</span></div>
+    <div class="ins-unit">(단위: 원)</div>
+    <table class="tax-table ins-table">
+      <thead>
+        <tr><th>항목</th><th>근로자</th><th>사업주</th><th>합계</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>국민연금</td><td id="npsEmp">0</td><td id="npsCom">0</td><td id="npsSum">0</td></tr>
+        <tr><td>건강보험</td><td id="hiEmp">0</td><td id="hiCom">0</td><td id="hiSum">0</td></tr>
+        <tr><td>장기요양</td><td id="ltcEmp">0</td><td id="ltcCom">0</td><td id="ltcSum">0</td></tr>
+        <tr><td>고용보험</td><td id="eiEmp">0</td><td id="eiCom">0</td><td id="eiSum">0</td></tr>
+        <tr class="ins-total"><td>합계</td><td id="totEmp">0</td><td id="totCom">0</td><td id="totSum">0</td></tr>
+      </tbody>
+    </table>
+    <div class="ins-note">※ 2026년 요율 기준 참고용 모의계산입니다. 원단위 절사 방식·개인별 상황에 따라 실제 고지 금액과 차이가 있을 수 있습니다.<br>※ 산재보험(전액 사업주 부담)은 제외되었습니다.</div>
   </div>
   </div>
   <div class="contact-section">
@@ -145,7 +195,7 @@ body{padding:14px;display:block}
       <button type="button" class="contact-button save-image" id="saveImageBtn">📷 사진으로 저장하기</button>
     </div>
   </div>
-  <div class="version">소득세 계산기 v30</div>
+  <div class="version">소득세 계산기 v31</div>
 </div>
 <div class="modal" id="taxModal">
   <div class="modal-content">
@@ -189,7 +239,34 @@ body{padding:14px;display:block}
     </table>
     <div style="margin-top:14px;font-size:12px;color:#999;line-height:1.6;">
       ※ 소득세법 시행령 제19조제3항에 따른 종교인소득 필요경비입니다.<br>
-      ※ 결정세액 = (종교인소득 - 필요경비)에 종합소득세율 적용 후, 기본공제 7만원 차감
+      ※ 결정세액 = (종교인소득 − 필요경비 − 기본소득공제 150만원)에 종합소득세율 적용 후, 표준세액공제 7만원 차감
+    </div>
+  </div>
+</div>
+<div class="modal" id="insuranceModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">2026년 4대보험 요율표</div>
+      <button class="close-btn" id="insuranceCloseBtn">&times;</button>
+    </div>
+    <table class="tax-table ins-table">
+      <thead>
+        <tr><th>항목</th><th>근로자</th><th>사업주</th><th>합계</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>국민연금</td><td>4.75%</td><td>4.75%</td><td>9.5%</td></tr>
+        <tr><td>건강보험</td><td>3.595%</td><td>3.595%</td><td>7.19%</td></tr>
+        <tr><td>장기요양</td><td colspan="3" style="text-align:center;white-space:normal">건강보험료의 13.14%<br>(근로자·사업주 각 50%)</td></tr>
+        <tr><td>고용보험<br>(실업급여)</td><td>0.9%</td><td>0.9%</td><td>1.8%</td></tr>
+        <tr><td>고용안정·<br>직능개발</td><td>-</td><td>0.25%</td><td>0.25%</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:14px;font-size:12px;color:#999;line-height:1.7;">
+      ※ 국민연금 기준소득월액 상한 659만원 · 하한 41만원 (2026.7~2027.6 적용)<br>
+      ※ 건강보험료 월 상한(총) 9,183,480원 · 하한 20,160원<br>
+      ※ 고용안정·직업능력개발부담금은 150인 미만 사업장 기준(0.25%)<br>
+      ※ 산재보험은 업종별 요율로 전액 사업주 부담이며 본 계산에서 제외<br>
+      ※ 출처: 국민연금공단·국민건강보험공단·근로복지공단 (2026년)
     </div>
   </div>
 </div>
@@ -222,25 +299,21 @@ const taxY=cardY+cardH-90;ctx.font='16px sans-serif';ctx.fillStyle='#666';ctx.fi
 ctx.font='14px sans-serif';ctx.fillStyle='#777';ctx.textAlign='center';ctx.fillText('※ 실제 세액은 공제·감면 등 상황에 따라 달라질 수 있습니다.',width/2,cardY+cardH-30);
 const url=canvas.toDataURL('image/png');const a=document.createElement('a');a.href=url;a.download='소득세_계산결과_v29.png';a.click()}
 saveImageBtn.addEventListener('click',saveResultAsImage);
- 
+
 /* ===== 탭 전환 ===== */
-const incomeTabBtn=document.getElementById('incomeTabBtn'),religiousTabBtn=document.getElementById('religiousTabBtn'),incomeTaxPanel=document.getElementById('incomeTaxPanel'),religiousTaxPanel=document.getElementById('religiousTaxPanel'),mainTitle=document.getElementById('mainTitle');
+const incomeTabBtn=document.getElementById('incomeTabBtn'),religiousTabBtn=document.getElementById('religiousTabBtn'),insuranceTabBtn=document.getElementById('insuranceTabBtn'),incomeTaxPanel=document.getElementById('incomeTaxPanel'),religiousTaxPanel=document.getElementById('religiousTaxPanel'),insurancePanel=document.getElementById('insurancePanel'),mainTitle=document.getElementById('mainTitle');
 function switchTab(tab){
-  if(tab==='income'){
-    incomeTabBtn.classList.add('active');religiousTabBtn.classList.remove('active');
-    incomeTaxPanel.classList.add('active');religiousTaxPanel.classList.remove('active');
-    mainTitle.textContent='소득세 계산기';
-  }else{
-    religiousTabBtn.classList.add('active');incomeTabBtn.classList.remove('active');
-    religiousTaxPanel.classList.add('active');incomeTaxPanel.classList.remove('active');
-    mainTitle.textContent='종교인소득세 계산기';
-  }
+  const map={income:[incomeTabBtn,incomeTaxPanel,'소득세 계산기'],religious:[religiousTabBtn,religiousTaxPanel,'종교인소득세 계산기'],insurance:[insuranceTabBtn,insurancePanel,'4대보험료 계산기']};
+  [incomeTabBtn,religiousTabBtn,insuranceTabBtn].forEach(b=>b.classList.remove('active'));
+  [incomeTaxPanel,religiousTaxPanel,insurancePanel].forEach(p=>p.classList.remove('active'));
+  const t=map[tab];t[0].classList.add('active');t[1].classList.add('active');mainTitle.textContent=t[2];
 }
 incomeTabBtn.addEventListener('click',()=>switchTab('income'));
 religiousTabBtn.addEventListener('click',()=>switchTab('religious'));
- 
+insuranceTabBtn.addEventListener('click',()=>switchTab('insurance'));
+
 /* ===== 종교인소득세 계산 ===== */
-const RELIGIOUS_BASIC_DEDUCTION=70000;
+const RELIGIOUS_BASIC_DEDUCTION=70000;const RELIGIOUS_INCOME_DEDUCTION=1500000;
 function calcReligiousExpense(income){
   if(income<=20000000)return Math.floor(income*0.8);
   if(income<=40000000)return Math.floor(16000000+(income-20000000)*0.5);
@@ -258,12 +331,15 @@ function performReligiousCalculation(){
   const income=parseInt((religiousIncomeInput.value||'').replace(/,/g,''),10);
   if(!income||income<=0){alert('종교인소득 금액을 0보다 큰 숫자로 입력해주세요.');religiousIncomeInput.focus();return}
   const expense=calcReligiousExpense(income);
-  const base=Math.max(0,income-expense);
-  const r=calculateTax(base);
+  const incomeAmount=Math.max(0,income-expense);
+  const taxBase=Math.max(0,incomeAmount-RELIGIOUS_INCOME_DEDUCTION);
+  document.getElementById('religiousResultIncome').textContent=formatCurrency(income);
+  document.getElementById('religiousResultExpense').textContent=formatCurrency(expense)+' ('+religiousExpenseFormula(income)+')';
+  document.getElementById('religiousResultBase').textContent=formatCurrency(incomeAmount);
+  document.getElementById('religiousResultBasicDeduction').textContent='-'+formatCurrency(RELIGIOUS_INCOME_DEDUCTION);
+  document.getElementById('religiousResultTaxBase').textContent=formatCurrency(taxBase);
+  const r=calculateTax(taxBase);
   if(!r){
-    document.getElementById('religiousResultIncome').textContent=formatCurrency(income);
-    document.getElementById('religiousResultExpense').textContent=formatCurrency(expense);
-    document.getElementById('religiousResultBase').textContent=formatCurrency(base);
     document.getElementById('religiousResultRate').textContent='0%';
     document.getElementById('religiousResultFormula').textContent='과세표준 0원';
     document.getElementById('religiousResultGross').textContent=formatCurrency(0);
@@ -273,9 +349,6 @@ function performReligiousCalculation(){
     return;
   }
   const finalTax=Math.max(0,r.tax-RELIGIOUS_BASIC_DEDUCTION);
-  document.getElementById('religiousResultIncome').textContent=formatCurrency(income);
-  document.getElementById('religiousResultExpense').textContent=formatCurrency(expense)+' ('+religiousExpenseFormula(income)+')';
-  document.getElementById('religiousResultBase').textContent=formatCurrency(base);
   document.getElementById('religiousResultRate').textContent=r.rate.toFixed(0)+'%';
   document.getElementById('religiousResultFormula').textContent=r.formula;
   document.getElementById('religiousResultGross').textContent=formatCurrency(r.tax);
@@ -289,6 +362,37 @@ religiousIncomeInput.addEventListener('input',function(){let v=this.value.replac
 religiousTableBtn.addEventListener('click',e=>{e.preventDefault();religiousModal.classList.add('show')});
 religiousCloseBtn.addEventListener('click',()=>religiousModal.classList.remove('show'));
 religiousModal.addEventListener('click',e=>{if(e.target===religiousModal)religiousModal.classList.remove('show')});
+document.getElementById('religiousIncomeTableBtn').addEventListener('click',e=>{e.preventDefault();modal.classList.add('show')});
+/* ===== 4대보험료 계산 ===== */
+const NPS_RATE=0.0475,HI_RATE=0.03595,LTC_RATE=0.1314,EI_EMP_RATE=0.009,EI_COM_RATE=0.0115;
+const NPS_BASE_MIN=410000,NPS_BASE_MAX=6590000,HI_EMP_MIN=10080,HI_EMP_MAX=4591740;
+function floor10(n){return Math.floor(Math.round(n)/10)*10;}
+function won(n){return n.toLocaleString('ko-KR');}
+const salaryInput=document.getElementById('salaryInput'),insuranceCalculateBtn=document.getElementById('insuranceCalculateBtn'),insuranceTableBtn=document.getElementById('insuranceTableBtn'),insuranceResultSection=document.getElementById('insuranceResultSection'),insuranceModal=document.getElementById('insuranceModal'),insuranceCloseBtn=document.getElementById('insuranceCloseBtn');
+function performInsuranceCalculation(){
+  const salary=parseInt((salaryInput.value||'').replace(/,/g,''),10);
+  if(!salary||salary<=0){alert('월 급여를 0보다 큰 숫자로 입력해주세요.');salaryInput.focus();return}
+  let npsBase=Math.floor(salary/1000)*1000;npsBase=Math.min(Math.max(npsBase,NPS_BASE_MIN),NPS_BASE_MAX);
+  const npsEmp=floor10(npsBase*NPS_RATE),npsCom=floor10(npsBase*NPS_RATE);
+  let hiEmp=salary*HI_RATE;hiEmp=Math.min(Math.max(hiEmp,HI_EMP_MIN),HI_EMP_MAX);hiEmp=floor10(hiEmp);const hiCom=hiEmp;
+  const ltcEmp=floor10(hiEmp*LTC_RATE),ltcCom=floor10(hiCom*LTC_RATE);
+  const eiEmp=floor10(salary*EI_EMP_RATE),eiCom=floor10(salary*EI_COM_RATE);
+  const totEmp=npsEmp+hiEmp+ltcEmp+eiEmp,totCom=npsCom+hiCom+ltcCom+eiCom;
+  const set=(id,v)=>document.getElementById(id).textContent=won(v);
+  document.getElementById('insResultSalary').textContent=formatCurrency(salary);
+  set('npsEmp',npsEmp);set('npsCom',npsCom);set('npsSum',npsEmp+npsCom);
+  set('hiEmp',hiEmp);set('hiCom',hiCom);set('hiSum',hiEmp+hiCom);
+  set('ltcEmp',ltcEmp);set('ltcCom',ltcCom);set('ltcSum',ltcEmp+ltcCom);
+  set('eiEmp',eiEmp);set('eiCom',eiCom);set('eiSum',eiEmp+eiCom);
+  set('totEmp',totEmp);set('totCom',totCom);set('totSum',totEmp+totCom);
+  insuranceResultSection.classList.add('show');
+}
+insuranceCalculateBtn.addEventListener('click',e=>{e.preventDefault();performInsuranceCalculation()});
+salaryInput.addEventListener('keypress',e=>{if(e.key==='Enter'){e.preventDefault();performInsuranceCalculation()}});
+salaryInput.addEventListener('input',function(){let v=this.value.replace(/[^0-9]/g,'');this.value=v?parseInt(v,10).toLocaleString('ko-KR'):''});
+insuranceTableBtn.addEventListener('click',e=>{e.preventDefault();insuranceModal.classList.add('show')});
+insuranceCloseBtn.addEventListener('click',()=>insuranceModal.classList.remove('show'));
+insuranceModal.addEventListener('click',e=>{if(e.target===insuranceModal)insuranceModal.classList.remove('show')});
 </script>
 </body>
 </html>
