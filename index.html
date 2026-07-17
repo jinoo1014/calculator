@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>소득세 계산기 v32</title>
+<title>소득세 계산기 v33</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Noto Sans KR',sans-serif;background:#eef2f7;min-height:100vh;padding:20px;display:flex;justify-content:center;align-items:center;color:#0d253d;-webkit-font-smoothing:antialiased}
@@ -202,7 +202,7 @@ body{padding:14px;display:block}
       <button type="button" class="contact-button save-image" id="saveImageBtn">📷 사진으로 저장하기</button>
     </div>
   </div>
-  <div class="version">소득세 계산기 v32</div>
+  <div class="version">소득세 계산기 v33</div>
 </div>
 <div class="modal" id="taxModal">
   <div class="modal-content">
@@ -291,27 +291,100 @@ closeBtn.addEventListener('click',()=>modal.classList.remove('show'));
 modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('show')});
 function wrapText(ctx,text,maxWidth){const words=text.split(' ');const lines=[];let line='';for(const w of words){const test=line?line+' '+w:w;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=w}else{line=test}}if(line)lines.push(line);return lines}
 function drawRoundedRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
-async function saveResultAsImage(){if(!resultSection.classList.contains('show')){alert('먼저 소득세를 계산한 다음 사진으로 저장할 수 있습니다.');return}
-const incomeText=document.getElementById('resultIncome').textContent,rateText=document.getElementById('resultRate').textContent,formulaText=document.getElementById('resultFormula').textContent,taxText=document.getElementById('resultTax').textContent;
-const canvas=document.createElement('canvas');const width=800,height=600;canvas.width=width;canvas.height=height;const ctx=canvas.getContext('2d');
-const grad=ctx.createLinearGradient(0,0,width,height);grad.addColorStop(0,'#533afd');grad.addColorStop(1,'#1c1e54');ctx.fillStyle=grad;ctx.fillRect(0,0,width,height);
-const cardX=60,cardY=80,cardW=width-120,cardH=height-160;ctx.fillStyle='#fff';drawRoundedRect(ctx,cardX,cardY,cardW,cardH,20);ctx.fill();
-ctx.fillStyle='#0d253d';ctx.font='bold 28px sans-serif';ctx.textAlign='center';ctx.fillText('소득세 계산 결과',width/2,cardY+50);
-let x=cardX+40,y=cardY+110,gap=42;
-ctx.textAlign='left';ctx.font='16px sans-serif';ctx.fillStyle='#64748d';ctx.fillText('과세표준',x,y);ctx.font='bold 20px sans-serif';ctx.fillStyle='#0d253d';ctx.fillText(incomeText,x+140,y);
-y+=gap;ctx.font='16px sans-serif';ctx.fillStyle='#64748d';ctx.fillText('적용세율',x,y);ctx.font='bold 20px sans-serif';ctx.fillStyle='#0d253d';ctx.fillText(rateText,x+140,y);
-y+=gap;ctx.font='16px sans-serif';ctx.fillStyle='#94a3b8';ctx.fillText('계산식',x,y);ctx.font='15px sans-serif';ctx.fillStyle='#475569';
-wrapText(ctx,formulaText,cardW-220).forEach((line,i)=>ctx.fillText(line,x+140,y+(i+1)*22));
-const taxY=cardY+cardH-90;ctx.font='16px sans-serif';ctx.fillStyle='#64748d';ctx.fillText('종합소득세',x,taxY);ctx.font='bold 26px sans-serif';ctx.fillStyle='#533afd';ctx.fillText(taxText,x+140,taxY);
-ctx.font='14px sans-serif';ctx.fillStyle='#8a97a8';ctx.textAlign='center';ctx.fillText('※ 실제 세액은 공제·감면 등 상황에 따라 달라질 수 있습니다.',width/2,cardY+cardH-30);
-canvas.toBlob(async function(blob){
-  const fileName='소득세_계산결과.png';
-  const file=new File([blob],fileName,{type:'image/png'});
-  if(navigator.canShare&&navigator.canShare({files:[file]})){
-    try{await navigator.share({files:[file],title:'소득세 계산 결과'});return;}catch(e){if(e&&e.name==='AbortError'){return;}}
+var _wmCanvas;
+function getWM(){if(_wmCanvas!==undefined)return _wmCanvas;var img=document.querySelector('.logo img');if(!img||!img.naturalWidth){_wmCanvas=null;return null;}var oc=document.createElement('canvas');oc.width=img.naturalWidth;oc.height=img.naturalHeight;var o=oc.getContext('2d');o.drawImage(img,0,0);try{var id=o.getImageData(0,0,oc.width,oc.height),dt=id.data,i;for(i=0;i<dt.length;i+=4){if(dt[i]>235&&dt[i+1]>235&&dt[i+2]>235)dt[i+3]=0;}o.putImageData(id,0,0);}catch(e){}_wmCanvas=oc;return oc;}
+function _t(x,txt,px,py,font,color,align){x.font=font;x.fillStyle=color;x.textAlign=align;x.textBaseline='middle';x.fillText(txt,px,py);}
+function _hair(x,L,R,y){x.strokeStyle='#e3e8ee';x.lineWidth=1;x.beginPath();x.moveTo(L,y);x.lineTo(R,y);x.stroke();}
+function _card(h,title,wmA){
+  var c=document.createElement('canvas');c.width=800;c.height=h;var x=c.getContext('2d');
+  var W=800,M=26,R=22,ST=7,cL=M,cT=M,cR=W-M,cB=h-M;
+  x.fillStyle='#eef2f7';x.fillRect(0,0,W,h);
+  x.save();x.shadowColor='rgba(30,40,70,.28)';x.shadowBlur=18;x.shadowOffsetY=8;drawRoundedRect(x,cL,cT,cR-cL,cB-cT,R);x.fillStyle='#fff';x.fill();x.restore();
+  var g={L:cL+28,R:cR-28,cx:(cL+cR)/2};
+  g.titleY=cT+ST+48;g.dividerY=g.titleY+34;g.top=g.dividerY+34;g.footY1=cB-50;g.footY2=cB-26;g.bot=g.footY1-44;
+  x.save();drawRoundedRect(x,cL,cT,cR-cL,cB-cT,R);x.clip();
+  var gr=x.createLinearGradient(cL,0,cR,0);gr.addColorStop(0,'#f5e9d4');gr.addColorStop(.32,'#f96bee');gr.addColorStop(.66,'#533afd');gr.addColorStop(1,'#ea2261');x.fillStyle=gr;x.fillRect(cL,cT,cR-cL,ST);
+  var wm=getWM();if(wm){var lw=(cR-cL)*0.42,lh=lw*wm.height/wm.width;x.save();x.globalAlpha=wmA;if('filter' in x)x.filter='blur(2px)';x.drawImage(wm,g.cx-lw/2,(g.top+g.bot)/2-lh/2,lw,lh);x.restore();}
+  x.restore();
+  _t(x,title,cL+28,g.titleY,'bold 25px sans-serif','#0d253d','left');
+  var img=document.querySelector('.logo img');if(img&&img.naturalWidth){var lw2=90,lh2=lw2*img.naturalHeight/img.naturalWidth;x.drawImage(img,cR-28-lw2,g.titleY-lh2/2,lw2,lh2);}
+  _hair(x,g.L,g.R,g.dividerY);
+  return {c:c,x:x,g:g};
+}
+function _foot(x,g){_t(x,'※ 실제 세액은 공제·감면 등 상황에 따라 달라집니다.',g.cx,g.footY1,'14px sans-serif','#8a97a8','center');_t(x,'(문의) 서진우세무사 010-6209-4967',g.cx,g.footY2,'14px sans-serif','#8a97a8','center');}
+function _gid(id){return document.getElementById(id).textContent;}
+function _saveIncome(){
+  var o=_card(480,'소득세 계산 결과',0.20),x=o.x,g=o.g,L=g.L,R=g.R;
+  var G=54,ex=26,bH=3*G+ex,st=g.top+Math.max(0,(g.bot-g.top-bH)/2);
+  var y0=st,y1=st+G,y2=st+2*G,y3=st+3*G+ex;
+  _t(x,'과세표준',L,y0,'17px sans-serif','#64748d','left');_t(x,_gid('resultIncome'),R,y0,'22px sans-serif','#0d253d','right');
+  _t(x,'적용세율',L,y1,'17px sans-serif','#64748d','left');_t(x,_gid('resultRate'),R,y1,'22px sans-serif','#0d253d','right');
+  _t(x,'계산식',L,y2,'16px sans-serif','#94a3b8','left');_t(x,_gid('resultFormula'),R,y2+24,'16px sans-serif','#475569','right');
+  _hair(x,L,R,y3-26);
+  _t(x,'종합소득세',L,y3,'17px sans-serif','#64748d','left');_t(x,_gid('resultTax'),R,y3,'bold 29px sans-serif','#533afd','right');
+  _foot(x,g);_share(o.c,'소득세_계산결과.png');
+}
+function _saveRelig(){
+  var expFull=_gid('religiousResultExpense'),m=expFull.match(/^(.*?)\s*\((.*)\)\s*$/),expA=m?m[1]:expFull,expF=m?m[2]:'';
+  var o=_card(600,'종교인소득세 계산 결과',0.17),x=o.x,g=o.g,L=g.L,R=g.R;
+  var gap=(g.bot-g.top-18)/9,y=g.top;
+  function row(l,v,vf,vc){_t(x,l,L,y,'15px sans-serif','#64748d','left');_t(x,v,R,y,vf||'19px sans-serif',vc||'#0d253d','right');}
+  row('종교인소득',_gid('religiousResultIncome'));y+=gap;
+  _t(x,'필요경비',L,y,'15px sans-serif','#64748d','left');_t(x,expA,R,y,'19px sans-serif','#0d253d','right');
+  if(expF)_t(x,expF,R,y+19,'13px sans-serif','#94a3b8','right');y+=gap+18;
+  row('소득금액',_gid('religiousResultBase'));y+=gap;
+  row('기본소득공제',_gid('religiousResultBasicDeduction'),null,'#cb2d2d');y+=gap;
+  row('과세표준',_gid('religiousResultTaxBase'));y+=gap;
+  row('적용세율',_gid('religiousResultRate'));y+=gap;
+  _t(x,'계산식',L,y,'14px sans-serif','#94a3b8','left');_t(x,_gid('religiousResultFormula'),R,y,'14px sans-serif','#475569','right');y+=gap;
+  row('산출세액',_gid('religiousResultGross'));y+=gap;
+  row('표준세액공제',_gid('religiousResultDeduction'),null,'#cb2d2d');y+=gap;
+  _hair(x,L,R,y-16);
+  row('결정세액',_gid('religiousResultTax'),'bold 27px sans-serif','#533afd');
+  _foot(x,g);_share(o.c,'종교인소득세_계산결과.png');
+}
+function _saveIns(){
+  var o=_card(600,'4대보험료 계산 결과',0.10),x=o.x,g=o.g,L=g.L,R=g.R,w=R-L;
+  var rowh=44,block=48+6*rowh+30,y=g.top+Math.max(0,(g.bot-g.top-block)/2);
+  _t(x,'월 급여',L,y+14,'17px sans-serif','#64748d','left');_t(x,_gid('insResultSalary'),R,y+14,'22px sans-serif','#0d253d','right');y+=48;
+  var c1=L+w*0.24,nw=(R-c1)/3,cen=[c1+nw*0.5,c1+nw*1.5,c1+nw*2.5],i;
+  drawRoundedRect(x,L,y,w,rowh,8);x.fillStyle='#1c1e54';x.fill();
+  _t(x,'항목',L+14,y+rowh/2,'14px sans-serif','#ffffff','left');
+  var hd=['근로자','사업주','합계'];
+  for(i=0;i<3;i++)_t(x,hd[i],cen[i],y+rowh/2,(i==2?'bold 14px sans-serif':'14px sans-serif'),'#ebeefa','center');
+  y+=rowh;
+  var rows=[['국민연금','npsEmp','npsCom','npsSum'],['건강보험','hiEmp','hiCom','hiSum'],['장기요양','ltcEmp','ltcCom','ltcSum'],['고용보험','eiEmp','eiCom','eiSum']],r;
+  for(r=0;r<rows.length;r++){
+    _t(x,rows[r][0],L+14,y+rowh/2,'14px sans-serif','#0d253d','left');
+    var vals=[_gid(rows[r][1]),_gid(rows[r][2]),_gid(rows[r][3])];
+    for(i=0;i<3;i++)_t(x,vals[i],cen[i],y+rowh/2,(i==2?'bold 14px sans-serif':'14px sans-serif'),'#0d253d','center');
+    _hair(x,L,R,y+rowh);y+=rowh;
   }
-  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=fileName;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},1000);
-},'image/png');}
+  x.fillStyle='#eef0ff';x.fillRect(L,y,w,rowh);
+  _t(x,'합계',L+14,y+rowh/2,'bold 14px sans-serif','#533afd','left');
+  var tv=[_gid('totEmp'),_gid('totCom'),_gid('totSum')];
+  for(i=0;i<3;i++)_t(x,tv[i],cen[i],y+rowh/2,(i==2?'bold 15px sans-serif':'bold 14px sans-serif'),'#533afd','center');
+  y+=rowh+18;
+  _t(x,'(단위: 원 · 산재보험 제외)',R,y,'12px sans-serif','#94a3b8','right');
+  _foot(x,g);_share(o.c,'4대보험료_계산결과.png');
+}
+function _dl(blob,fname){var u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=fname;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(u);},1000);}
+function _share(canvas,fname){
+  var durl=canvas.toDataURL('image/png'),bin=atob(durl.split(',')[1]),n=bin.length,arr=new Uint8Array(n),i;
+  for(i=0;i<n;i++)arr[i]=bin.charCodeAt(i);
+  var blob=new Blob([arr],{type:'image/png'}),file=new File([blob],fname,{type:'image/png'});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){
+    navigator.share({files:[file],title:fname.replace(/\.png$/,'')}).catch(function(e){if(!(e&&e.name==='AbortError')){_dl(blob,fname);}});
+    return;
+  }
+  _dl(blob,fname);
+}
+function saveResultAsImage(){
+  var ap=document.querySelector('.tab-panel.active'),active=ap?ap.id:'incomeTaxPanel';
+  if(active==='religiousTaxPanel'){if(!religiousResultSection.classList.contains('show')){alert('먼저 종교인소득세를 계산해주세요.');return;}_saveRelig();}
+  else if(active==='insurancePanel'){if(!insuranceResultSection.classList.contains('show')){alert('먼저 4대보험료를 계산해주세요.');return;}_saveIns();}
+  else{if(!resultSection.classList.contains('show')){alert('먼저 소득세를 계산해주세요.');return;}_saveIncome();}
+}
 saveImageBtn.addEventListener('click',saveResultAsImage);
 
 /* ===== 탭 전환 ===== */
